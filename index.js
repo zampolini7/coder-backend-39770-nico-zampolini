@@ -1,62 +1,118 @@
+import fs from "fs";
 class ProductManager {
-  constructor() {
+  constructor(path) {
     this.products = [];
+    this.path = path;
+    this.init(path);
   }
 
-  addProduct({ title, description, price, thumbnail, stock }) {
-    let id;
-    if (this.products.length === 0) {
-      id = 1;
+  init(path) {
+    let file = fs.existsSync(path);
+    if (!file) {
+      fs.writeFileSync(path, "[]");
+      return "se creo en " + this.path;
     } else {
-      let lastProduct = this.products[this.products.length - 1];
-      id = lastProduct.id + 1;
+      this.products = JSON.parse(fs.readFileSync(path, "utf-8"));
+      console.log("data recovered");
+      return "data recoverd";
     }
-    let product = { title, description, price, thumbnail, stock, id };
-    this.products.push(product);
+  }
+  // init check
+
+  async addProduct({ title, description, price, thumbnail, stock }) {
+    try {
+      let data = { title, description, price, thumbnail, stock };
+
+      if (this.products.length > 0) {
+        let next_id = this.products[this.products.length - 1].id + 1;
+        data.id = next_id;
+      } else {
+        data.id = 1;
+      }
+
+      this.products.push(data);
+
+      let data_json = JSON.stringify(this.products, null, 2);
+
+      await fs.promises.writeFile(this.path, data_json);
+      console.log("Producto agregado correctamente " + data.id);
+      return "Producto agregado correctamente " + data.id;
+    } catch (error) {
+      console.log("Error al escribir el archivo:", error);
+      return "error: Error al agregar el producto";
+    }
   }
 
-  getProducts() {
-    console.log(this.products);
-    return this.products;
+  getProducts(quantity) {
+    let slice_array = this.products.slice(0, quantity);
+    console.log(slice_array);
+    return slice_array;
   }
+  // get products check
 
   getProductById(id) {
-    let productById;
-    for (let i = 0; i < this.products.length; i++) {
-      if (id === this.products[i].id) {
-        productById = this.products[i];
-        break;
-      } else {
-        productById = "Not found";
-      }
+    let productById = this.products.find((each) => each.id === id);
+    if (!productById) {
+      console.log("Not found");
+      return null;
     }
-    console.log(productById);
+    console.log("finded user:" + id);
     return productById;
+  }
+
+  async deleteProductById(id) {
+    try {
+      let one = this.getProductById(id);
+      if (!one) {
+        console.log("error: Not found user");
+        return "error: Not found user";
+      }
+      this.products = this.products.filter((product) => product.id !== id);
+      let dataJson = JSON.stringify(this.products, null, 2);
+      await fs.promises.writeFile(this.path, dataJson);
+      console.log("delete user:" + id);
+      return "delete user:" + id;
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  }
+  //check delete
+
+  async updateProduct(id, data) {
+    try {
+      let one = this.getProductById(id);
+      if (!one) {
+        console.log("error: Not found user");
+        return "error: Not found user";
+      }
+      if (Object.keys(data).length === 0) {
+        console.log("error: Insert some values");
+        return "error: Insert some values";
+      }
+      for (let prop in data) {
+        if (
+          prop !== "description" &&
+          prop !== "title" &&
+          prop !== "price" &&
+          prop !== "thumbnail" &&
+          prop !== "stock"
+        ) {
+          console.log(`error: ${prop} is not a property of product`);
+          return "error: insert a correct property";
+        }
+        one[prop] = data[prop];
+      }
+
+      let data_json = JSON.stringify(this.products, null, 2);
+      await fs.promises.writeFile(this.path, data_json);
+      console.log("updated user:" + id);
+      return "udpated user" + id;
+    } catch (error) {
+      console.log(error);
+      return "Not found";
+    }
   }
 }
 
-let product = new ProductManager();
-
-product.addProduct({
-  title: "Buzz LightYear",
-  description: "Juguete bien picantovich para niños y adultos",
-  price: 4000,
-  stock: 20,
-  thumbnail:
-    "https://media.revistagq.com/photos/62a8546d6b74c0e2031238a6/1:1/w_770,h_770,c_limit/buzz.jpg",
-});
-
-product.addProduct({
-  title: "Woody",
-  description: "El vaquero mas cra de todo el condado",
-  price: 5000,
-  stock: 10,
-  thumbnail: "https://upload.wikimedia.org/wikipedia/en/0/01/Sheriff_Woody.png",
-});
-
-// product.getProducts();
-
-product.getProductById(0);
-product.getProductById(1);
-product.getProductById(2);
-product.getProductById(3);
+export default ProductManager;

@@ -1,0 +1,74 @@
+[
+  {
+    "title": "Buzz LightYear",
+    "description": "Juguete bien picantovich para niños y adultos",
+    "price": 4000,
+    "thumbnail": "https://media.revistagq.com/photos/62a8546d6b74c0e2031238a6/1:1/w_770,h_770,c_limit/buzz.jpg",
+    "stock": 20,
+    "id": 1
+  },
+  {
+    "title": "Woody",
+    "description": "El vaquero mas cra de todo el condado",
+    "price": 5000,
+    "thumbnail": "https://upload.wikimedia.org/wikipedia/en/0/01/Sheriff_Woody.png",
+    "stock": 10,
+    "id": 2
+  },
+  {
+    "title": "Al",
+    "description": "El que queria vender a woody",
+    "price": 2200,
+    "thumbnail": "https://upload.wikimedia.org/wikipedia/en/0/01/Sheriff_Woody.png",
+    "stock": 10,
+    "id": 3
+  },
+  {
+    "title": "Al1",
+    "description": "El que queria vender a woody",
+    "price": 2200,
+    "thumbnail": "https://upload.wikimedia.org/wikipedia/en/0/01/Sheriff_Woody.png",
+    "stock": 10,
+    "id": 4
+  },
+  {
+    "title": "Al2",
+    "description": "El que queria vender a woody",
+    "price": 2200,
+    "thumbnail": "https://upload.wikimedia.org/wikipedia/en/0/01/Sheriff_Woody.png",
+    "stock": 10,
+    "id": 5
+  },
+  {
+    "title": "Al4",
+    "description": "El que queria vender a woody",
+    "price": 2200,
+    "thumbnail": "https://upload.wikimedia.org/wikipedia/en/0/01/Sheriff_Woody.png",
+    "stock": 10,
+    "id": 6
+  },
+  {
+    "title": "Al5",
+    "description": "El que queria vender a woody",
+    "price": 2200,
+    "thumbnail": "https://upload.wikimedia.org/wikipedia/en/0/01/Sheriff_Woody.png",
+    "stock": 10,
+    "id": 7
+  },
+  {
+    "title": "Al6",
+    "description": "El que queria vender a woody",
+    "price": 2200,
+    "thumbnail": "https://upload.wikimedia.org/wikipedia/en/0/01/Sheriff_Woody.png",
+    "stock": 10,
+    "id": 8
+  },
+  {
+    "title": "Andy",
+    "description": "Las personas no son producto, pero es mi app ah re",
+    "price": 12000,
+    "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRS1mh3kr9y7ImLx9AbCAhXttMpQ7vEteMEFdFyfDZePg&s",
+    "stock": 1,
+    "id": 9
+  }
+]
