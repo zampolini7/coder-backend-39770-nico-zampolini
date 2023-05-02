@@ -9,3 +9,6 @@ Tambien se crearon 3 metodos de la clase:
 addProduct para agregar productos, getProducts para obtener todos los productos, getProductById para obtener un producto especifico en base a su identificador.
 
 Muchas gracias por tu lectura :)
+
+Segundo entregable:
+Se agregaron meteods del modulo de "fs" para guardar y hacer persistenten la memoria local de la aplicacion, agregando, editando, eliminando y trayendo todos los datos desde el archivo data.json.
