@@ -65,9 +65,11 @@ class ProductManager {
       let one = this.getProductById(id);
       if (!one) {
         console.log("error: Not found user");
-        return "error: Not found user";
+        return one;
       }
-      this.products = this.products.filter((product) => product.id !== id);
+      this.products = this.products.filter(
+        (product) => product.id.toString() !== id
+      );
       let dataJson = JSON.stringify(this.products, null, 2);
       await fs.promises.writeFile(this.path, dataJson);
       console.log("delete user:" + id);

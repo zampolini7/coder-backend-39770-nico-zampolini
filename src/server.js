@@ -16,4 +16,3 @@ server.use(express.urlencoded({ extended: true }));
 server.use("/", router);
 server.use(errorHanlder);
 server.use(not_found_handler);
-// server.use(express.static(__dirname + "/public"));
