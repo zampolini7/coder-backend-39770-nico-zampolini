@@ -107,5 +107,5 @@ async function productManager() {
   product.getProducts();
 }
 
-productManager();
+// productManager();
 export default product;
