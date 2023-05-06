@@ -1,6 +1,6 @@
 import ProductManager from "./index.js";
 
-let product = new ProductManager("./data/data.json");
+let product = new ProductManager("./src/data/data.json");
 async function productManager() {
   await product.addProduct({
     title: "Buzz LightYear",
