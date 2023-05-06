@@ -51,12 +51,12 @@ class ProductManager {
   // get products check
 
   getProductById(id) {
-    let productById = this.products.find((each) => each.id === id);
+    let productById = this.products.find((each) => each.id.toString() === id);
     if (!productById) {
       console.log("Not found");
       return null;
     }
-    console.log("finded user:" + id);
+    console.log("finded product:" + id);
     return productById;
   }
 
