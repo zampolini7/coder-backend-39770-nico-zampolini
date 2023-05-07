@@ -45,7 +45,7 @@ class ProductManager {
 
   getProducts(quantity) {
     let slice_array = this.products.slice(0, quantity);
-    console.log(slice_array);
+    // console.log(slice_array);
     return slice_array;
   }
   // get products check

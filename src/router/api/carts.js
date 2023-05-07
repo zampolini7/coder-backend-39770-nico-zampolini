@@ -71,23 +71,42 @@ router.post("/", async (req, res, next) => {
     next(error);
   }
 });
-
-router.put("/:cid", async (req, res, next) => {
+router.put("/:cid/product/:pid/:units", async (req, res, next) => {
   try {
-    let { cid } = req.params;
-    const updatedCart = req.body;
-    const { products } = updatedCart;
-    console.log(products);
-    if (updatedCart) {
-      let productCreated = await cart.updateProduct(cid, products[0]);
-      res.json({
-        status: "200",
-        response: productCreated,
-      });
+    let { cid, pid, units } = req.params;
+
+    if (cid && pid && units) {
+      let productUpdated = await cart.updateProduct(cid, pid, units);
+      if (
+        productUpdated !== null &&
+        !productUpdated.includes(
+          "Las cantidades que quieres ingresar superan el stock"
+        )
+      ) {
+        res.json({
+          status: "200",
+          response: productUpdated,
+        });
+      } else if (
+        productUpdated !== null &&
+        productUpdated.includes(
+          "Las cantidades que quieres ingresar superan el stock"
+        )
+      ) {
+        res.json({
+          status: "404",
+          response: productUpdated,
+        });
+      } else {
+        res.json({
+          status: "404",
+          response: productUpdated,
+        });
+      }
     } else {
       res.json({
-        status: "404",
-        response: productCreated,
+        status: "400",
+        response: "Parámetros incompletos",
       });
     }
   } catch (error) {
@@ -95,24 +114,43 @@ router.put("/:cid", async (req, res, next) => {
   }
 });
 
-router.delete("/:cid", async (req, res, next) => {
+router.delete("/:cid/product/:pid/:units", async (req, res, next) => {
   try {
-    let { cid } = req.params;
-    console.log(cid);
-    if (cid) {
-      let cartDeleted = await cart.deleteCartById(cid);
+    let { cid, pid, units } = req.params;
 
-      if (cartDeleted !== null) {
+    if (cid && pid && units) {
+      let productDeleted = await cart.deleteProduct(cid, pid, units);
+      if (
+        productDeleted !== null &&
+        !productDeleted.includes(
+          "La cantidad que quieres quitar supera la cantidad en el carrito"
+        )
+      ) {
         res.json({
           status: "200",
-          response: cartDeleted,
+          response: productDeleted,
+        });
+      } else if (
+        productDeleted !== null &&
+        productDeleted.includes(
+          "La cantidad que quieres quitar supera la cantidad en el carrito"
+        )
+      ) {
+        res.json({
+          status: "404",
+          response: productDeleted,
         });
       } else {
         res.json({
           status: "404",
-          response: "No hay carritos con ese id",
+          response: productDeleted,
         });
       }
+    } else {
+      res.json({
+        status: "400",
+        response: "Parámetros incompletos",
+      });
     }
   } catch (error) {
     next(error);

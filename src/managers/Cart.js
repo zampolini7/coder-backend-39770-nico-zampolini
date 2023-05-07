@@ -1,9 +1,10 @@
 import fs from "fs";
-
+import product from "./script.js";
 class CartManager {
   constructor(path) {
     this.path = path;
     this.carts = [];
+    this.products = product.getProducts();
     this.init(path);
   }
 
@@ -80,77 +81,106 @@ class CartManager {
     }
   }
 
-  async deleteCartById(id) {
+  async deleteProduct(cid, pid, units) {
     try {
-      let one = this.getCartById(id);
-      if (!one) {
-        console.log("error: Not found cart");
-        return null;
+      let cartToDeleteFrom = this.getCartById(cid);
+      if (!cartToDeleteFrom) {
+        console.log("Cart not found");
+        return `Cart with id: ${cid} not found`;
       }
-      this.carts = this.carts.filter((carts) => carts.id.toString() !== id);
-      let dataJson = JSON.stringify(this.carts, null, 2);
-      await fs.promises.writeFile(this.path, dataJson);
-      console.log("deleted cart: " + id);
-      return "deleted cart: " + id;
+
+      let productToDelete = cartToDeleteFrom.products.find(
+        (p) => p.id.toString() === pid
+      );
+      if (!productToDelete) {
+        console.log("Product not found in cart");
+        return `Product with id: ${pid} not found in cart with id: ${cid}`;
+      }
+
+      const requestedUnits = parseInt(units);
+      const cartUnits = productToDelete.quantity;
+      const unitsToRemove = Math.min(requestedUnits, cartUnits);
+
+      if (requestedUnits > cartUnits) {
+        return `La cantidad que quieres quitar del producto ${pid} supera la cantidad en el carrito: ${cartUnits}`;
+      }
+
+      productToDelete.quantity -= unitsToRemove;
+
+      // Agregar las unidades al stock del producto
+      let productIndex = this.products.findIndex(
+        (p) => p.id.toString() === pid
+      );
+      if (productIndex !== -1) {
+        this.products[productIndex].stock += unitsToRemove;
+      }
+
+      // Eliminar el producto del carrito si la cantidad llega a cero
+      if (productToDelete.quantity === 0) {
+        cartToDeleteFrom.products = cartToDeleteFrom.products.filter(
+          (p) => p.id.toString() !== pid
+        );
+      }
+
+      let data_json = JSON.stringify(this.carts, null, 2);
+      await fs.promises.writeFile(this.path, data_json);
+      console.log(
+        `Deleted ${unitsToRemove} units of product ${pid} from cart ${cid}`
+      );
+      return `Deleted ${unitsToRemove} units of product ${pid} from cart ${cid}`;
     } catch (error) {
       console.log(error);
-      return error;
+      return null;
     }
   }
+
   //check delete
 
-  // async updateProduct(id, data) {
-  //   try {
-  //     let one = this.getCartById(id);
-  //     if (!one) {
-  //       console.log("error: Not found cart");
-  //       return "error: Not found cart";
-  //     }
-  //     if (Object.keys(data).length === 0) {
-  //       console.log("error: Insert some values");
-  //       return "error: Insert some values";
-  //     }
-  //     for (let prop in data) {
-  //       if (prop !== "quantity" && prop !== "id") {
-  //         console.log(`error: ${prop} is not a property of product`);
-  //         return "error: insert a correct property";
-  //       }
-  //       if (prop === "quantity") {
-  //         const product = this.getProductById(one.id);
-  //         if (data[prop] > product.stock) {
-  //           one[prop] = product.stock;
-  //         } else {
-  //           one[prop] = data[prop];
-  //         }
-
-  //         product.stock -= one[prop];
-  //       } else {
-  //         one[prop] = data[prop];
-  //       }
-  //     }
-
-  //     let data_json = JSON.stringify(this.carts, null, 2);
-  //     await fs.promises.writeFile(this.path, data_json);
-  //     console.log("updated cart: " + id);
-  //     return "updated cart: " + id;
-  //   } catch (error) {
-  //     console.log(error);
-  //     return "Not found";
-  //   }
-  // }
-  async updateProduct(id, data) {
+  async updateProduct(id, productId, units) {
     try {
-      let one = this.getCartById(id);
-      console.log(data, one);
-      // for (let prop in data) {
-      //   one[prop] = data[prop];
-      // }
+      let cartToUpdate = this.getCartById(id);
+      if (!cartToUpdate) {
+        console.log("Cart not found");
+        return `Cart with id: ${id} not found`;
+      }
+      let productToUpdate = cartToUpdate.products.find(
+        (p) => p.id.toString() === productId
+      );
+      if (!productToUpdate) {
+        console.log("Product not found in cart");
+        return `Product with id: ${productId} not found in cart with id: ${id}`;
+      }
 
-      // let data_json = JSON.stringify(this.carts, null, 2);
-      // console.log("despues", this.carts);
-      // await fs.promises.writeFile(this.path, data_json);
-      // console.log("updated cart: " + id);
-      return 200;
+      let matchingElementUnits = this.products.find(
+        (p) => p.id.toString() === productId
+      );
+      if (!matchingElementUnits) {
+        console.log("Product not found");
+        return `Product with id: ${productId} not found`;
+      }
+
+      const currentStock = matchingElementUnits.stock;
+      const requestedUnits = parseInt(units);
+      const availableUnits = Math.min(requestedUnits, currentStock);
+
+      if (requestedUnits > currentStock) {
+        return `Las cantidades que quieres ingresar del producto ${matchingElementUnits.id}: ${requestedUnits} superan el stock de ${currentStock}`;
+      }
+
+      productToUpdate.quantity += availableUnits;
+      matchingElementUnits.stock -= availableUnits;
+
+      let data_json = JSON.stringify(this.carts, null, 2);
+      await fs.promises.writeFile(this.path, data_json);
+
+      // Actualizar el stock en la lista de productos
+      let productIndex = this.products.findIndex((p) => p.id === productId);
+      if (productIndex !== -1) {
+        this.products[productIndex].stock -= availableUnits;
+      }
+
+      console.log("Updated cart: " + id);
+      return "Updated cart: " + id;
     } catch (error) {
       console.log(error);
       return null;
