@@ -8,18 +8,21 @@ router.get("/", (req, res, next) => {
     let limit = req.query.limit ?? null;
     if (limit !== null) {
       res.json({
-        success: true,
-        products: products.slice(0, limit),
+        status: "200",
+        response: products.slice(0, limit),
+      });
+    }
+    if (limit === null && products.length > 0) {
+      res.json({
+        status: "200",
+        response: products,
       });
     } else {
       res.json({
-        success: true,
-        products: products,
+        status: "200",
+        response: "No hay productos en el carrito",
       });
     }
-    res.json({
-      status: "ok",
-    });
   } catch (error) {
     next(error);
   }
@@ -30,16 +33,15 @@ router.get("/:pid", async (req, res, next) => {
     let { pid } = req.params;
     console.log(pid);
     let product2 = await product.getProductById(pid);
-
     if (product2 !== null) {
       res.json({
-        success: true,
-        products: product2,
+        status: "200",
+        response: product2,
       });
     } else {
       res.json({
-        success: false,
-        products: "Producto no encontrado",
+        status: "404",
+        response: "Producto no encontrado",
       });
     }
   } catch (error) {
@@ -47,7 +49,7 @@ router.get("/:pid", async (req, res, next) => {
   }
 });
 
-router.post("/", async (req, res) => {
+router.post("/", async (req, res, next) => {
   try {
     const newProduct = req.body;
     const { title, description, price, thumbnail, stock } = newProduct;
@@ -60,14 +62,13 @@ router.post("/", async (req, res) => {
         stock: stock ?? null,
       });
       res.json({
-        status: "succes",
-        id: productCreated.id,
-        products: "producto agregado",
+        status: "200",
+        response: productCreated,
       });
     } else {
       res.json({
-        status: "error",
-        message: "Faltan campos por completar",
+        status: "404",
+        response: "Faltan campos por completar",
       });
     }
   } catch (error) {
@@ -75,7 +76,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.put("/:pid", async (req, res) => {
+router.put("/:pid", async (req, res, next) => {
   try {
     let { pid } = req.params;
     const newProduct = req.body;
@@ -89,14 +90,13 @@ router.put("/:pid", async (req, res) => {
         stock: stock ?? null,
       });
       res.json({
-        status: "succes",
-        id: productCreated.id,
-        products: "producto editado",
+        status: "200",
+        response: productCreated,
       });
     } else {
       res.json({
-        status: "error",
-        message: "Faltan campos por completar",
+        status: "404",
+        response: "Faltan campos por completar",
       });
     }
   } catch (error) {
@@ -104,7 +104,7 @@ router.put("/:pid", async (req, res) => {
   }
 });
 
-router.delete("/:pid", async (req, res) => {
+router.delete("/:pid", async (req, res, next) => {
   try {
     let { pid } = req.params;
     console.log(pid);
@@ -113,13 +113,13 @@ router.delete("/:pid", async (req, res) => {
 
       if (product2 !== null) {
         res.json({
-          status: "succes",
-          productDeleted: product2,
+          status: "200",
+          response: product2,
         });
       } else {
         res.json({
-          status: "error",
-          message: "Faltan ingresa un id valido",
+          status: "404",
+          response: "No hay productos con ese id",
         });
       }
     }

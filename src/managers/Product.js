@@ -35,10 +35,10 @@ class ProductManager {
       let data_json = JSON.stringify(this.products, null, 2);
 
       await fs.promises.writeFile(this.path, data_json);
-      console.log("Producto agregado correctamente " + data.id);
-      return "Producto agregado correctamente " + data.id;
+      console.log("Producto agregado correctamente: " + data.id);
+      return "Producto agregado correctamente: " + data.id;
     } catch (error) {
-      console.log("Error al escribir el archivo:", error);
+      console.log("Error al escribir el archivo: ", error);
       return "error: Error al agregar el producto";
     }
   }
@@ -56,7 +56,7 @@ class ProductManager {
       console.log("Not found");
       return null;
     }
-    console.log("finded product:" + id);
+    console.log("finded product: " + id);
     return productById;
   }
 
@@ -72,8 +72,8 @@ class ProductManager {
       );
       let dataJson = JSON.stringify(this.products, null, 2);
       await fs.promises.writeFile(this.path, dataJson);
-      console.log("delete user:" + id);
-      return "delete user:" + id;
+      console.log("delete user: " + id);
+      return "delete user: " + id;
     } catch (error) {
       console.log(error);
       return error;
@@ -108,8 +108,8 @@ class ProductManager {
 
       let data_json = JSON.stringify(this.products, null, 2);
       await fs.promises.writeFile(this.path, data_json);
-      console.log("updated user:" + id);
-      return "udpated user" + id;
+      console.log("updated user: " + id);
+      return "udpated user: " + id;
     } catch (error) {
       console.log(error);
       return "Not found";

@@ -48,7 +48,7 @@ class CartManager {
 
       await fs.promises.writeFile(this.path, data_json);
       console.log("Cart added successfully: " + cart.id);
-      return;
+      return "El carrito fue agregado exitosamente con el id: " + cart.id;
     } catch (error) {
       console.error("addCart: error", error);
       return "addCart: error";
@@ -65,18 +65,95 @@ class CartManager {
       return "getCarts: error";
     }
   }
-  getCartById(pid) {
+  getCartById(cid) {
     try {
-      let cartById = this.carts.find((each) => each.id.toString() === pid);
+      let cartById = this.carts.find((each) => each.id.toString() === cid);
       if (!cartById) {
         console.log("Not found");
-        return "Not found";
+        return null;
       }
-      console.log("Found cart with id: " + pid);
+      console.log("Found cart with id: " + cid);
       return cartById;
     } catch (error) {
       console.error("getCartById: error" + error);
       return "getCartById: error";
+    }
+  }
+
+  async deleteCartById(id) {
+    try {
+      let one = this.getCartById(id);
+      if (!one) {
+        console.log("error: Not found cart");
+        return null;
+      }
+      this.carts = this.carts.filter((carts) => carts.id.toString() !== id);
+      let dataJson = JSON.stringify(this.carts, null, 2);
+      await fs.promises.writeFile(this.path, dataJson);
+      console.log("deleted cart: " + id);
+      return "deleted cart: " + id;
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  }
+  //check delete
+
+  // async updateProduct(id, data) {
+  //   try {
+  //     let one = this.getCartById(id);
+  //     if (!one) {
+  //       console.log("error: Not found cart");
+  //       return "error: Not found cart";
+  //     }
+  //     if (Object.keys(data).length === 0) {
+  //       console.log("error: Insert some values");
+  //       return "error: Insert some values";
+  //     }
+  //     for (let prop in data) {
+  //       if (prop !== "quantity" && prop !== "id") {
+  //         console.log(`error: ${prop} is not a property of product`);
+  //         return "error: insert a correct property";
+  //       }
+  //       if (prop === "quantity") {
+  //         const product = this.getProductById(one.id);
+  //         if (data[prop] > product.stock) {
+  //           one[prop] = product.stock;
+  //         } else {
+  //           one[prop] = data[prop];
+  //         }
+
+  //         product.stock -= one[prop];
+  //       } else {
+  //         one[prop] = data[prop];
+  //       }
+  //     }
+
+  //     let data_json = JSON.stringify(this.carts, null, 2);
+  //     await fs.promises.writeFile(this.path, data_json);
+  //     console.log("updated cart: " + id);
+  //     return "updated cart: " + id;
+  //   } catch (error) {
+  //     console.log(error);
+  //     return "Not found";
+  //   }
+  // }
+  async updateProduct(id, data) {
+    try {
+      let one = this.getCartById(id);
+      console.log(data, one);
+      // for (let prop in data) {
+      //   one[prop] = data[prop];
+      // }
+
+      // let data_json = JSON.stringify(this.carts, null, 2);
+      // console.log("despues", this.carts);
+      // await fs.promises.writeFile(this.path, data_json);
+      // console.log("updated cart: " + id);
+      return 200;
+    } catch (error) {
+      console.log(error);
+      return null;
     }
   }
 }

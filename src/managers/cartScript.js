@@ -1,4 +1,4 @@
-import CartManager from "./cartManager.js";
+import CartManager from "./Cart.js";
 
 let cart = new CartManager("./src/data/cart.json");
 

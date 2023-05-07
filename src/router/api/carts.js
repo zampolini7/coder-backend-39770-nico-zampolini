@@ -1,82 +1,122 @@
 import { Router } from "express";
-
+import cart from "../../managers/cartScript.js";
 const router = Router();
-const users = [];
 
 router.get("/", (req, res, next) => {
   try {
-    let a = conta1;
-    return res.send({
-      users,
-    });
+    let limit = req.query.limit ?? null;
+    let carts = cart.getCarts();
+    if (limit !== null) {
+      res.json({
+        status: "200",
+        response: carts.slice(0, limit),
+      });
+    }
+    if (limit === null && carts.length > 0) {
+      res.json({
+        status: "200",
+        response: carts,
+      });
+    } else {
+      res.json({
+        status: "200",
+        response: "No hay productos en el carrito",
+      });
+    }
   } catch (error) {
     next(error);
   }
 });
 
-// router.post("/", (req, res) => {
-//   const user = req.body;
+router.get("/:cid", async (req, res, next) => {
+  try {
+    let { cid } = req.params;
+    console.log(cid);
+    let cart2 = await cart.getCartById(cid);
+    if (cart2 !== null) {
+      res.json({
+        status: "200",
+        response: cart2,
+      });
+    } else {
+      res.json({
+        status: "404",
+        response: "Producto no encontrado",
+      });
+    }
+  } catch (error) {
+    next(error);
+  }
+});
 
-//   users.push(user);
-//   res.send({
-//     status: "succes",
-//     users,
-//   });
-// });
+router.post("/", async (req, res, next) => {
+  try {
+    const newCart = req.body;
+    const { products } = newCart;
+    console.log(products);
 
-// const carts_rout = "/GET/api/carts";
+    if (products) {
+      let cartCreated = await cart.addCart(products ?? []);
+      res.json({
+        status: "200",
+        response: cartCreated,
+      });
+    } else {
+      res.json({
+        status: "404",
+        response: "Faltan campos por completar",
+      });
+    }
+  } catch (error) {
+    next(error);
+  }
+});
 
-// async function carts_function(req, res) {
-//   try {
-//     let carts = cart.getCarts();
-//     let limit = req.query.limit ?? null;
-//     if (limit !== null) {
-//       res.send({
-//         success: true,
-//         products: carts.slice(0, limit),
-//       });
-//     } else {
-//       res.send({
-//         success: true,
-//         products: carts,
-//       });
-//     }
-//   } catch (error) {
-//     res.send({
-//       succes: false,
-//       error: error ?? "Ha sucedido un erroraso mi rey",
-//     });
-//   }
-// }
+router.put("/:cid", async (req, res, next) => {
+  try {
+    let { cid } = req.params;
+    const updatedCart = req.body;
+    const { products } = updatedCart;
+    console.log(products);
+    if (updatedCart) {
+      let productCreated = await cart.updateProduct(cid, products[0]);
+      res.json({
+        status: "200",
+        response: productCreated,
+      });
+    } else {
+      res.json({
+        status: "404",
+        response: productCreated,
+      });
+    }
+  } catch (error) {
+    next(error);
+  }
+});
 
-// router.get(carts_rout, carts_function);
+router.delete("/:cid", async (req, res, next) => {
+  try {
+    let { cid } = req.params;
+    console.log(cid);
+    if (cid) {
+      let cartDeleted = await cart.deleteCartById(cid);
 
-// const cart_id_route = "/GET/api/carts/:cid";
-
-// async function cart_id_function(req, res) {
-//   try {
-//     let { cid } = req.params;
-//     let cart2 = await cart.getCartById(cid);
-//     console.log(cart2);
-//     if (cart2 !== "Not found") {
-//       res.send({
-//         success: true,
-//         products: cart2,
-//       });
-//     } else {
-//       res.send({
-//         success: false,
-//         products: "Carrito no encontrado",
-//       });
-//     }
-//   } catch (error) {
-//     console.log(error);
-//     res.send({
-//       success: false,
-//       products: error,
-//     });
-//   }
-// }
-// router.get(cart_id_route, cart_id_function);
+      if (cartDeleted !== null) {
+        res.json({
+          status: "200",
+          response: cartDeleted,
+        });
+      } else {
+        res.json({
+          status: "404",
+          response: "No hay carritos con ese id",
+        });
+      }
+    }
+  } catch (error) {
+    next(error);
+  }
+});
 
 export default router;
