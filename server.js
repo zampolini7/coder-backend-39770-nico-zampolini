@@ -18,7 +18,7 @@ let index_function = (req, res) => {
 
 server.get(index_route, index_function);
 
-const products_route = "/GET/api/products";
+const products_route = "/api/products";
 
 const products_function = (req, res) => {
   try {
@@ -27,12 +27,12 @@ const products_function = (req, res) => {
     if (limit !== null) {
       res.send({
         success: true,
-        products: products.slice(0, limit),
+        response: products.slice(0, limit),
       });
     } else {
       res.send({
         success: true,
-        products: products,
+        response: products,
       });
     }
   } catch (error) {
@@ -44,7 +44,7 @@ const products_function = (req, res) => {
 };
 server.get(products_route, products_function);
 
-const product_id_route = "/GET/api/products/:pid";
+const product_id_route = "/api/products/:pid";
 
 async function produc_id_function(req, res) {
   try {
@@ -55,25 +55,25 @@ async function produc_id_function(req, res) {
     if (product2 !== null) {
       res.send({
         success: true,
-        products: product2,
+        response: product2,
       });
     } else {
       res.send({
         success: false,
-        products: "Producto no encontrado",
+        response: "Producto no encontrado",
       });
     }
   } catch (error) {
     console.log(error);
     res.send({
       success: false,
-      products: error,
+      response: error,
     });
   }
 }
 server.get(product_id_route, produc_id_function);
 
-const carts_rout = "/GET/api/carts";
+const carts_rout = "/api/carts";
 
 async function carts_function(req, res) {
   try {
@@ -82,12 +82,12 @@ async function carts_function(req, res) {
     if (limit !== null) {
       res.send({
         success: true,
-        products: carts.slice(0, limit),
+        response: carts.slice(0, limit),
       });
     } else {
       res.send({
         success: true,
-        products: carts,
+        response: carts,
       });
     }
   } catch (error) {
@@ -100,7 +100,7 @@ async function carts_function(req, res) {
 
 server.get(carts_rout, carts_function);
 
-const cart_id_route = "/GET/api/carts/:cid";
+const cart_id_route = "/api/carts/:cid";
 
 async function cart_id_function(req, res) {
   try {
@@ -110,19 +110,19 @@ async function cart_id_function(req, res) {
     if (cart2 !== "Not found") {
       res.send({
         success: true,
-        products: cart2,
+        response: cart2,
       });
     } else {
       res.send({
         success: false,
-        products: "Carrito no encontrado",
+        response: "Carrito no encontrado",
       });
     }
   } catch (error) {
     console.log(error);
     res.send({
       success: false,
-      products: error,
+      response: error,
     });
   }
 }
