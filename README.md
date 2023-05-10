@@ -33,3 +33,18 @@ Puedes consultar los productos utilizando las siguientes rutas:
 Además, puedes realizar consultas por un producto específico utilizando la siguiente ruta:
 
 - Para obtener un producto en particular: `GET /products/{id}`
+
+
+### Consulta de carritos
+
+Puedes consultar los carritos utilizando las siguientes rutas:
+
+- Para obtener todos los carritos: `GET /api/carts`
+- Para obtener una cantidad limitada de carritos: `GET /api/carts?limit={cantidad}`
+
+También puedes realizar consultas por un carrito específico utilizando la siguiente ruta:
+
+- Para obtener un carrito en particular: `GET /carts/{id}`
+
+¡Muchas gracias! :D
+
