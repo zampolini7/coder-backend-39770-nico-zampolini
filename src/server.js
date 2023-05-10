@@ -1,18 +1,18 @@
-import express from "express";
-import __dirname from "./utils.js";
-import router from "./router/index.js";
-import errorHanlder from "./middlewares/errorHandler.js";
-import not_found_handler from "./middlewares/notFoundHandle.js";
+import server from "./app.js";
+import { Server } from "socket.io";
 
 const PORT = 8080;
-const server = express();
 
-server.listen(PORT, () => {
+let http_server = server.listen(PORT, () => {
   console.log("Bienvenidos a Himalaya :D");
 });
-server.use(express.static("public"));
-server.use(express.json());
-server.use(express.urlencoded({ extended: true }));
-server.use("/", router);
-server.use(errorHanlder);
-server.use(not_found_handler);
+
+let socket_server = new Server(http_server);
+// on para escuchar los msjs que llegan del cliente
+socket_server.on(
+  "cliente_conected", //identificar de msj
+  (socket) => {
+    console.log(`El cliente de ${socket.id} `);
+    console.log(socket);
+  } // callback apenas se conecta un cliente
+);
