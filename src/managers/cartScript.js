@@ -1,6 +1,6 @@
-import CartManager from "./cartManager.js";
+import CartManager from "./Cart.js";
 
-let cart = new CartManager("./data/cart.json");
+let cart = new CartManager("./src/data/cart.json");
 
 async function cartManager() {
   cart.addCart([

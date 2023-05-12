@@ -35,17 +35,17 @@ class ProductManager {
       let data_json = JSON.stringify(this.products, null, 2);
 
       await fs.promises.writeFile(this.path, data_json);
-      console.log("Producto agregado correctamente " + data.id);
-      return "Producto agregado correctamente " + data.id;
+      console.log("Producto agregado correctamente: " + data.id);
+      return "Producto agregado correctamente: " + data.id;
     } catch (error) {
-      console.log("Error al escribir el archivo:", error);
+      console.log("Error al escribir el archivo: ", error);
       return "error: Error al agregar el producto";
     }
   }
 
   getProducts(quantity) {
     let slice_array = this.products.slice(0, quantity);
-    console.log(slice_array);
+    // console.log(slice_array);
     return slice_array;
   }
   // get products check
@@ -56,7 +56,7 @@ class ProductManager {
       console.log("Not found");
       return null;
     }
-    console.log("finded product:" + id);
+    console.log("finded product: " + id);
     return productById;
   }
 
@@ -65,13 +65,15 @@ class ProductManager {
       let one = this.getProductById(id);
       if (!one) {
         console.log("error: Not found user");
-        return "error: Not found user";
+        return one;
       }
-      this.products = this.products.filter((product) => product.id !== id);
+      this.products = this.products.filter(
+        (product) => product.id.toString() !== id
+      );
       let dataJson = JSON.stringify(this.products, null, 2);
       await fs.promises.writeFile(this.path, dataJson);
-      console.log("delete user:" + id);
-      return "delete user:" + id;
+      console.log("delete user: " + id);
+      return "delete user: " + id;
     } catch (error) {
       console.log(error);
       return error;
@@ -92,6 +94,7 @@ class ProductManager {
       }
       for (let prop in data) {
         if (
+          prop !== "id" &&
           prop !== "description" &&
           prop !== "title" &&
           prop !== "price" &&
@@ -106,8 +109,8 @@ class ProductManager {
 
       let data_json = JSON.stringify(this.products, null, 2);
       await fs.promises.writeFile(this.path, data_json);
-      console.log("updated user:" + id);
-      return "udpated user" + id;
+      console.log("updated user: " + id);
+      return "udpated user: " + id;
     } catch (error) {
       console.log(error);
       return "Not found";
