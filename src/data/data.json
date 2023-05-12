@@ -4,7 +4,7 @@
     "description": "El vaquero mas cra de todo el condado",
     "price": 5000,
     "thumbnail": "https://upload.wikimedia.org/wikipedia/en/0/01/Sheriff_Woody.png",
-    "stock": 10,
+    "stock": 12,
     "id": 2
   },
   {
@@ -134,5 +134,13 @@
     "thumbnail": "https://media.revistagq.com/photos/62a8546d6b74c0e2031238a6/1:1/w_770,h_770,c_limit/buzz.jpg",
     "stock": 12,
     "id": 21
+  },
+  {
+    "title": "Woody PostMan",
+    "description": "Juguete bien picantovich para niños y adultos",
+    "price": 5555,
+    "thumbnail": "https://media.revistagq.com/photos/62a8546d6b74c0e2031238a6/1:1/w_770,h_770,c_limit/buzz.jpg",
+    "stock": 12,
+    "id": 22
   }
 ]

@@ -94,6 +94,7 @@ class ProductManager {
       }
       for (let prop in data) {
         if (
+          prop !== "id" &&
           prop !== "description" &&
           prop !== "title" &&
           prop !== "price" &&
