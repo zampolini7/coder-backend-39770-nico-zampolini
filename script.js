@@ -104,8 +104,8 @@ async function productManager() {
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRS1mh3kr9y7ImLx9AbCAhXttMpQ7vEteMEFdFyfDZePg&s",
   });
   await product.deleteProductById(10);
-  product.getProducts();
+  // product.getProducts();
 }
 
-productManager();
+// productManager();
 export default product;

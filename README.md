@@ -34,6 +34,7 @@ Además, puedes realizar consultas por un producto específico utilizando la sig
 
 - Para obtener un producto en particular: `GET /products/{id}`
 
+
 ### Consulta de carritos
 
 Puedes consultar los carritos utilizando las siguientes rutas:
@@ -46,3 +47,4 @@ También puedes realizar consultas por un carrito específico utilizando la sigu
 - Para obtener un carrito en particular: `GET /carts/{id}`
 
 ¡Muchas gracias! :D
+
