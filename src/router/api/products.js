@@ -28,6 +28,11 @@ router.get("/", (req, res, next) => {
   }
 });
 
+//.get para Nuevo producto
+router.get('/new_product', (req, res)=>{
+  res.render('new_product')
+})
+
 router.get("/:pid", async (req, res, next) => {
   try {
     let { pid } = req.params;
