@@ -4,14 +4,24 @@
   <title>E-commerce</title>
 </head>
 <body>
-  <nav>
-    <ul>
-      <li><a href="/products">Products</a></li>
-      <li><a href="/chat">Chat</a></li>
-    </ul>
     <button class="cart-button">{{ cartItemCount }}</button>
-  </nav>
-  <h1>Bienvenido a nuestro e-commerce</h1>
-  <!-- aca va el contenido de la página -->
+
+  <h1>Welcome to our artisan bakery</h1>
+
+  <div class="d-flex justify-content">
+    {{#each products}}
+      <div class="card" style="width: 18rem">
+        <img src={{thumbnail}} class="card-img-top" style="width: 10rem; height: 8rem">
+        <div class="card-body">
+            <h5 class="card-title">{{name}}</h5>
+            <p class="card-text">{{description}}</p>
+            <a href="#" class="btn btn-primary">+ info</a>
+        </div>
+      </div>
+    {{/each}}
+  </div>
 </body>
-</html>
+
+
+
+
