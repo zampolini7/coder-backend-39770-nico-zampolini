@@ -83,29 +83,29 @@ class CartManager {
 
   async deleteProduct(cid, pid, units) {
     try {
-      let cartToDeleteFrom = this.getCartById(cid);
+      let cartToDeleteFrom = this.getCartById(cid); //obtengo el carrito
       if (!cartToDeleteFrom) {
         console.log("Cart not found");
-        return `Cart with id: ${cid} not found`;
+        return `Cart with id: ${cid} not found`; // si no encuentra el cid, devuelve esto
       }
 
       let productToDelete = cartToDeleteFrom.products.find(
-        (p) => p.id.toString() === pid
+        (p) => p.id.toString() === pid //encuentra el producto al que le quiero sacar elementos
       );
       if (!productToDelete) {
         console.log("Product not found in cart");
-        return `Product with id: ${pid} not found in cart with id: ${cid}`;
+        return `Product with id: ${pid} not found in cart with id: ${cid}`; // si no esta ese producto devuelve esto
       }
 
-      const requestedUnits = parseInt(units);
-      const cartUnits = productToDelete.quantity;
+      const requestedUnits = parseInt(units); // convierto a number las unidades a modificar
+      const cartUnits = productToDelete.quantity; //obtengo las cantidades del producto en el carrito
       const unitsToRemove = Math.min(requestedUnits, cartUnits);
 
       if (requestedUnits > cartUnits) {
-        return `La cantidad que quieres quitar del producto ${pid} supera la cantidad en el carrito: ${cartUnits}`;
+        return `La cantidad que quieres quitar del producto ${pid} supera la cantidad en el carrito: ${cartUnits}`; //si lo que quiero sacar supera en cantidad a lo que hay en el carrito devuelvo esto
       }
 
-      productToDelete.quantity -= unitsToRemove;
+      productToDelete.quantity -= unitsToRemove; //aca saca las cantidades aplicadas
 
       // Agregar las unidades al stock del producto
       let productIndex = this.products.findIndex(
@@ -121,6 +121,27 @@ class CartManager {
           (p) => p.id.toString() !== pid
         );
       }
+
+      let productToReturnStock = this.products.find(
+        (e) => e.id === productToDelete.id //encuentro el producto al que le devuelvo el stock
+      );
+      console.log(
+        productToReturnStock.stock,
+        "producto antes de devolver stock?"
+      );
+
+      console.log(
+        (productToReturnStock.stock =
+          productToReturnStock.stock + unitsToRemove),
+        "producto despues de devolver stock?"
+      );
+      console.log(productToReturnStock, "asi queda el product");
+      console.log(productToReturnStock.id, "este es el id product");
+
+      let result = await product.updateProduct(
+        productToReturnStock.id.toString(),
+        productToReturnStock
+      );
 
       let data_json = JSON.stringify(this.carts, null, 2);
       await fs.promises.writeFile(this.path, data_json);

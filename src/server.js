@@ -1,18 +1,21 @@
 import server from "./app.js";
 import { Server } from "socket.io";
 
-const PORT = 8080;
+let PORT = 8000;
+let ready = () => console.log("server ready on port: " + PORT);
 
-let http_server = server.listen(PORT, () => {
-  console.log("Bienvenidos a Himalaya :D");
-});
+let http_server = server.listen(PORT, ready);
 
 let socket_server = new Server(http_server);
-// on para escuchar los msjs que llegan del cliente
-socket_server.on(
-  "cliente_conected", //identificar de msj
-  (socket) => {
-    console.log(`El cliente de ${socket.id} `);
-    console.log(socket);
-  } // callback apenas se conecta un cliente
-);
+const chats = [];
+socket_server.on("connection", (socket) => {
+  console.log(socket.client.id);
+  socket.on("auth", () => {
+    socket_server.emit("all_messages", chats);
+  });
+  socket.on("new_message", (data) => {
+    chats.push(data);
+    console.log(chats);
+    socket_server.emit("all_messages", chats);
+  });
+});
