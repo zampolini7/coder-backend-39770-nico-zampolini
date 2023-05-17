@@ -1,21 +1,21 @@
 import { Router } from "express";
-import fs from 'fs/promises'
+import fs from "fs/promises";
 
-const home_router = Router()
+const home_router = Router();
 
-home_router.get('/', async (req,res,next)=> {
-    try {
-        const productsData = await fs.readFile('products.json', 'utf-8')
-        const products = JSON.parse(productsData)
+home_router.get("/", async (req, res, next) => {
+  try {
+    const response = await fetch("http://localhost:8000/api/products/");
+    const responseJson = await response.json();
+    const products = responseJson.response;
+    return res.render("products", {
+      products: products,
+      title: "home",
+      script: "/connection.js",
+    });
+  } catch (error) {
+    next(error);
+  }
+});
 
-        return res.render('home', {
-            products: products,
-            title: 'home',
-            script: '/connection.js'
-        })
-    } catch (error) {
-        next(error)
-    }
-})
-
-export default home_router
+export default home_router;

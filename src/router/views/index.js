@@ -12,10 +12,8 @@ views_router.use("/", products_router);
 views_router.use("/", product_router);
 views_router.use("/", cart_router);
 
-views_router.get("/views", views_function);
-
-views_router.use("/products", newProduct_router);
+views_router.use("/", newProduct_router);
 views_router.use("/", home_router);
-views_router.use("/chat", chat_router);
+views_router.use("/", chat_router);
 
 export default views_router;

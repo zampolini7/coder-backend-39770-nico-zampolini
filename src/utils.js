@@ -8,4 +8,4 @@ const __dirname = dirname(__filename);
 export { __filename, __dirname };
 //__dirname es la ruta principal "base"
 //hasta que hosteemos nuestro servidor la semana que viene
-//__dirname es localhost8080
+//__dirname es localhost8000
