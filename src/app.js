@@ -1,5 +1,6 @@
 import express from "express";
 import router from "./routes/index_router.js";
+// import router from "./router/index.js";
 import errorHandler from "./middlewares/errorHandler.js";
 import not_found_handler from "./middlewares/notFoundHandler.js";
 import { engine } from "express-handlebars";

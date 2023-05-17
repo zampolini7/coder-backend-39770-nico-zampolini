@@ -2,18 +2,20 @@ import { Router } from "express";
 import newProduct_router from "./newProducts.js";
 import home_router from "./home.js";
 import chat_router from "./chat.js";
+import products_router from "./products.js";
+import product_router from "./product.js";
+import cart_router from "./carts.js";
 
-const router = Router();
+const views_router = Router();
 
-function views_function(req, res) {
-  console.log("aca");
-  return res.json({ endpoint: "paaaaapi" });
-}
+views_router.use("/", products_router);
+views_router.use("/", product_router);
+views_router.use("/", cart_router);
 
-router.get("/views", views_function);
+views_router.get("/views", views_function);
 
-router.use('/products', newProduct_router)
-router.use('/', home_router)
-router.use('/chat', chat_router)
+views_router.use("/products", newProduct_router);
+views_router.use("/", home_router);
+views_router.use("/chat", chat_router);
 
-export default router;
+export default views_router;

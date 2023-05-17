@@ -1,0 +1,18 @@
+<div class="container bg-warning">
+  <h1>Productos</h1>
+  <div class="d-flex row flex-row">
+    <div class="d-flex col-12 flex-wrap">
+
+      {{#each carts}}
+        <div class="col-4 d-flex justify-content-center p-4">
+           <div>
+            {{this.id}}
+            {{this.quantity}}
+           </div>
+          </div>
+        </div>
+      {{/each}}
+
+    </div>
+  </div>
+</div>
