@@ -74,7 +74,7 @@ router.post("/", async (req, res, next) => {
 router.put("/:cid/product/:pid/:units", async (req, res, next) => {
   try {
     let { cid, pid, units } = req.params;
-
+    console.log(req.params, "req.para");
     if (cid && pid && units) {
       let productUpdated = await cart.updateProduct(cid, pid, units);
       if (

@@ -11,7 +11,7 @@ home_router.get("/", async (req, res, next) => {
     return res.render("products", {
       products: products,
       title: "home",
-      script: "/connection.js",
+      script: "/products.js",
     });
   } catch (error) {
     next(error);
