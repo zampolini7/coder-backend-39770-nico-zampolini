@@ -1,18 +1,21 @@
-import express from "express";
-import __dirname from "./utils.js";
-import router from "./router/index.js";
-import errorHanlder from "./middlewares/errorHandler.js";
-import not_found_handler from "./middlewares/notFoundHandle.js";
+import server from "./app.js";
+import { Server } from "socket.io";
 
-const PORT = 8080;
-const server = express();
+let PORT = 8000;
+let ready = () => console.log("server ready on port: " + PORT);
 
-server.listen(PORT, () => {
-  console.log("Bienvenidos a Himalaya :D");
+let http_server = server.listen(PORT, ready);
+
+let socket_server = new Server(http_server);
+const chats = [];
+socket_server.on("connection", (socket) => {
+  console.log(socket.client.id);
+  socket.on("auth", () => {
+    socket_server.emit("all_messages", chats);
+  });
+  socket.on("new_message", (data) => {
+    chats.push(data);
+    console.log(chats);
+    socket_server.emit("all_messages", chats);
+  });
 });
-server.use(express.static("public"));
-server.use(express.json());
-server.use(express.urlencoded({ extended: true }));
-server.use("/", router);
-server.use(errorHanlder);
-server.use(not_found_handler);
