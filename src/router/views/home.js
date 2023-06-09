@@ -5,7 +5,9 @@ const home_router = Router();
 
 home_router.get("/", async (req, res, next) => {
   try {
-    const response = await fetch("http://localhost:8000/api/products/");
+    const response = await fetch(
+      `http://localhost:${process.env.PORT}/api/products/`
+    );
     const responseJson = await response.json();
     const products = responseJson.response;
     return res.render("products", {

@@ -9,20 +9,23 @@ form.addEventListener("submit", async (e) => {
   const stock = document.getElementById("stock").value;
 
   try {
-    const response = await fetch("http://localhost:8000/api/products/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        title,
-        description,
-        price,
-        thumbnail,
-        code,
-        stock,
-      }),
-    });
+    const response = await fetch(
+      `http://localhost:${process.env.PORT}/api/products/`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title,
+          description,
+          price,
+          thumbnail,
+          code,
+          stock,
+        }),
+      }
+    );
     if (response.ok) {
       alert("product created");
       window.location.href = "/products";

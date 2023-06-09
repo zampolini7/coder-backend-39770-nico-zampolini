@@ -1,4 +1,4 @@
-var elementos = document.querySelectorAll(".cart-id");
+let elementos = document.querySelectorAll(".cart-id");
 
 // Recorrer los elementos y hacer una solicitud fetch por cada uno
 elementos.forEach(async function (elemento) {
@@ -6,9 +6,11 @@ elementos.forEach(async function (elemento) {
 
   // Realizar solicitud fetch
   try {
-    const response = await fetch(`http://localhost:8000/api/products/:${id}`);
+    const response = await fetch(
+      `http://localhost:${process.env.PORT}/api/products/:${id}`
+    );
 
-    console.log(data);
+    console.log(response);
 
     // Crear elementos HTML con la estructura proporcionada
     var row = document.createElement("div");
@@ -68,7 +70,7 @@ async function agregarAlCarrito(productId, stock) {
   // Implementa la lógica para agregar el producto al carrito usando el ID recibido
   try {
     const response = await fetch(
-      `http://localhost:8000/api/carts/1/product/${productId}/${units}`,
+      `http://localhost:${process.env.PORT}/api/carts/1/product/${productId}/${units}`,
       {
         method: "PUT",
       }

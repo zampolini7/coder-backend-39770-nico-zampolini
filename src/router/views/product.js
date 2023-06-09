@@ -4,7 +4,9 @@ const product_router = Router();
 product_router.get("/products/:pid", async (req, res, next) => {
   let { pid } = req.params;
 
-  const response = await fetch(`http://localhost:8000/api/products/${pid}`);
+  const response = await fetch(
+    `http://localhost:${process.env.PORT}/api/products/${pid}`
+  );
   const responseJson = await response.json();
   const product = responseJson.response;
   console.log(product);
