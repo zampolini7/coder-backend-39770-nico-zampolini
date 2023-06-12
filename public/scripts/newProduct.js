@@ -10,7 +10,9 @@ form.addEventListener("submit", async (e) => {
 
   try {
     const response = await fetch(
-      `http://localhost:${process.env.PORT}/api/products/`,
+      // `http://localhost:${process.env.PORT}/api/products/`,
+      `http://localhost:8060/api/products/`,
+
       {
         method: "POST",
         headers: {

@@ -4,6 +4,7 @@ import Product from "../../models/Product.js";
 const router = Router();
 
 router.get("/", (req, res, next) => {
+  console.log("entra aca o ne");
   try {
     let products = Product.find();
     let limit = req.query.limit ?? null;
@@ -56,6 +57,7 @@ router.get("/:pid", async (req, res, next) => {
 });
 
 router.post("/", async (req, res, next) => {
+  console.log("esta entrando aca");
   try {
     const newProduct = req.body;
     const { title, description, price, thumbnail, stock } = newProduct;
