@@ -1,15 +1,8 @@
 import { Router } from "express";
-import api_router from "./api/index.js";
-import view_router from "./views/index.js";
+import auth_router from "./auth.js";
 
-const router = Router();
+const index_router = Router();
 
-router.use("/api", api_router);
-router.use("/", view_router);
+index_router.use("/auth", auth_router);
 
-// router.get('/', (req, res) => {
-//     const cartItemCount = 5
-//     res.render('home', { cartItemCount })
-// })
-
-export default router;
+export default index_router;
