@@ -10,7 +10,7 @@
       integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
       crossorigin="anonymous"
     />
-    <title>LOG IN</title>
+    <title>PIZZAS</title>
   </head>
   <body class="d-flex flex-column justify-content-between min-vh-100">
     <nav class="navbar navbar-expand-sm bg-warning">
@@ -41,7 +41,7 @@
               <a class="nav-link text-light" href="/register.html">Register</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-light" href="#">Log In</a>
+              <a class="nav-link text-light" href="/login.html">Log In</a>
             </li>
             <li class="nav-item">
               <a class="nav-link text-light" href="#">Sign Out</a>
@@ -51,34 +51,52 @@
       </div>
     </nav>
     <main
-      class="d-flex flex-column justify-content-center align-items-center flex-grow-1"
+      class="w-100 d-flex flex-column align-items-center justify-content-center bg-warning flex-grow-1"
     >
-      <form
-        class="d-flex flex-column justify-content-center align-items-center w-50"
-        id="loginForm"
-      >
-        <fieldset class="mb-2 w-100">
-          <label for="mail" class="form-label">Mail</label>
-          <input type="email" class="form-control" name="mail" id="mail" />
-        </fieldset>
-        <fieldset class="mb-2 w-100">
-          <label for="password" class="form-label">Password</label>
-          <input
-            type="password"
-            class="form-control"
-            name="password"
-            id="password"
-          />
-        </fieldset>
-        <div class="d-flex justify-content-between w-100">
-          <input
-            type="button"
-            id="login"
-            class="btn btn-danger mt-2 w-100"
-            value="Log In!"
-          />
+      <div class="bg-warning">
+        <h1 class="pt-5">Welcome to our artisan bakery</h1>
+        <div class="d-flex row flex-row">
+          <div class="d-flex col-12 flex-wrap">
+            <div
+              class="col-4 d-flex justify-content-center p-4"
+              {{!
+              style="max-width: 400px; max-height: 500px"
+              }}
+            >
+              <div
+                class="card justify-content-between h-100"
+                style="width: 15rem"
+              >
+                <img
+                  src="{{this.thumbnail}}"
+                  style="
+                    max-width: 400px;
+                    max-height: 200px;
+                    object-fit: scale-down;
+                  "
+                />
+                <div class="card-body d-flex flex-column justify-content-end">
+                  <h5 class="card-title">{{this.title}}</h5>
+                  <p class="card-text">{{this.description}}</p>
+                  <p class="card-text">Unidades disponibles: {{this.stock}}</p>
+                  <p class="card-text">Precio: {{this.price}}</p>
+
+                  <button
+                    id="{{this._id}}"
+                    class="agregar-al-carrito btn btn-link w-100 d-flex justify-content-center text-decoration-none"
+                  >
+                    <a
+                      href="/products/{{this._id}}"
+                      class="btn text-light bg-dark d-flex justify-content-center"
+                      >Ver detalle del producto
+                    </a>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      </form>
+      </div>
     </main>
     <footer class="bg-warning p-2 text-center">E-COMMERCE</footer>
   </body>
@@ -88,5 +106,5 @@
     crossorigin="anonymous"
   ></script>
   <!-- agregar script para renderizado dinámico de barra de navegación con protecciones -->
-  <script src="/scripts/login.js"></script>
+  <!-- agregar script para renderizado dinámico de las pizzas -->
 </html>

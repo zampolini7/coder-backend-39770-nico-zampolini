@@ -1,5 +1,5 @@
 import { Router } from "express";
-import auth_router from "./auth.js";
+import auth_router from "./api/auth.js";
 import products_router from "./api/products.js";
 import cart_router from "./api/carts.js";
 

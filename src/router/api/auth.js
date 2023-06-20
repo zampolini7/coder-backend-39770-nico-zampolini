@@ -1,7 +1,7 @@
 import { Router } from "express";
-import User from "../models/User.js";
-import Validator from "../middlewares/validator.js";
-import pass_is_8 from "../middlewares/pass_is_8.js";
+import User from "../../models/User.js";
+import Validator from "../../middlewares/validator.js";
+import pass_is_8 from "../../middlewares/pass_is_8.js";
 
 const auth_router = Router();
 
