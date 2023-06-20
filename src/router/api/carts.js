@@ -1,11 +1,12 @@
 import { Router } from "express";
-import cart from "../../managers/cartScript.js";
+// import cart from "../../dao/managers/cartScript.js";
+import Cart from "../../models/Cart.js";
 const router = Router();
 
 router.get("/", (req, res, next) => {
   try {
     let limit = req.query.limit ?? null;
-    let carts = cart.getCarts();
+    let carts = Cart.find();
     if (limit !== null) {
       res.json({
         status: "200",
@@ -32,7 +33,9 @@ router.get("/:cid", async (req, res, next) => {
   try {
     let { cid } = req.params;
     console.log(cid);
-    let cart2 = await cart.getCartById(cid);
+    // let cart2 = await cart.getCartById(cid);
+    let cart2 = await Cart.findById(cid);
+
     if (cart2 !== null) {
       res.json({
         status: "200",
@@ -56,7 +59,9 @@ router.post("/", async (req, res, next) => {
     console.log(products);
 
     if (products) {
-      let cartCreated = await cart.addCart(products ?? []);
+      // let cartCreated = await cart.addCart(products ?? []);
+      let cartCreated = await Cart.Create(products ?? []);
+
       res.json({
         status: "200",
         response: cartCreated,
@@ -74,9 +79,11 @@ router.post("/", async (req, res, next) => {
 router.put("/:cid/product/:pid/:units", async (req, res, next) => {
   try {
     let { cid, pid, units } = req.params;
-
+    console.log(req.params, "req.para");
     if (cid && pid && units) {
-      let productUpdated = await cart.updateProduct(cid, pid, units);
+      // let productUpdated = await cart.updateProduct(cid, pid, units);
+      let productUpdated = await Cart.findByIdAndUpdate(cid, pid, units);
+
       if (
         productUpdated !== null &&
         !productUpdated.includes(
@@ -119,7 +126,9 @@ router.delete("/:cid/product/:pid/:units", async (req, res, next) => {
     let { cid, pid, units } = req.params;
 
     if (cid && pid && units) {
-      let productDeleted = await cart.deleteProduct(cid, pid, units);
+      // let productDeleted = await cart.deleteProduct(cid, pid, units);
+      let productDeleted = await Cart.findByIdAndDelete(cid);
+
       if (
         productDeleted !== null &&
         !productDeleted.includes(

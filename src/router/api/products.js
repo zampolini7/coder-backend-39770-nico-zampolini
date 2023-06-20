@@ -1,10 +1,11 @@
 import { Router } from "express";
-import product from "../../managers/script.js";
+// import product from "../../dao/managers/script.js";
+import Product from "../../models/Product.js";
 const router = Router();
 
 router.get("/", (req, res, next) => {
   try {
-    let products = product.getProducts();
+    let products = Product.find();
     let limit = req.query.limit ?? null;
     if (limit !== null) {
       res.json({
@@ -29,15 +30,15 @@ router.get("/", (req, res, next) => {
 });
 
 //.get para Nuevo producto
-router.get('/new_product', (req, res)=>{
-  res.render('new_product')
-})
+router.get("/new_product", (req, res) => {
+  res.render("new_product");
+});
 
 router.get("/:pid", async (req, res, next) => {
   try {
     let { pid } = req.params;
     console.log(pid);
-    let product2 = await product.getProductById(pid);
+    let product2 = await Product.findById(pid);
     if (product2 !== null) {
       res.json({
         status: "200",
@@ -59,7 +60,7 @@ router.post("/", async (req, res, next) => {
     const newProduct = req.body;
     const { title, description, price, thumbnail, stock } = newProduct;
     if (title && description && price && thumbnail && stock) {
-      let productCreated = await product.addProduct({
+      let productCreated = await Product.create({
         description: description ?? null,
         title: title ?? null,
         price: price ?? null,
@@ -87,7 +88,7 @@ router.put("/:pid", async (req, res, next) => {
     const newProduct = req.body;
     const { title, description, price, thumbnail, stock } = newProduct;
     if (title && description && price && thumbnail && stock) {
-      let productCreated = await product.updateProduct(pid, {
+      let productCreated = await Product.findByIdAndUpdate(pid, {
         description: description ?? null,
         title: title ?? null,
         price: price ?? null,
@@ -114,7 +115,7 @@ router.delete("/:pid", async (req, res, next) => {
     let { pid } = req.params;
     console.log(pid);
     if (pid) {
-      let product2 = await product.deleteProductById(pid);
+      let product2 = await Product.findByIdAndDelete(pid);
 
       if (product2 !== null) {
         res.json({

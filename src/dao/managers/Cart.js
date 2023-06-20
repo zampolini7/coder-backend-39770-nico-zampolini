@@ -169,6 +169,7 @@ class CartManager {
       );
       if (!productToUpdate) {
         console.log("Product not found in cart");
+        cartToUpdate.products.push({ id: +productId, quantity: +units });
         return `Product with id: ${productId} not found in cart with id: ${id}`;
       }
 

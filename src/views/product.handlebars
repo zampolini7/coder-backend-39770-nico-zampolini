@@ -22,17 +22,29 @@
             <h5 class="card-title">{{product.title}}</h5>
             <p class="card-text">{{product.description}}</p>
             <p class="card-text">{{product.stock}}</p>
-            <button
-              id="{id}"
-              class="btn btn-link w-100 d-flex justify-content-center text-decoration-none"
-            >
-              <a
-                href="#"
-                class="agregar-al-carrito"
-                data-product-id={{this.id}}
-              >Agregar al carrito x {{this.price}}</a>
+            <div class="form-group">
+              <label for="inputCantidad" class="form-label">Cantidad</label>
+              <div class="input-group">
+                <input
+                  type="number"
+                  class="form-control form-control-warning"
+                  id="inputCantidad"
+                  min="1"
+                  placeholder="Ingresa la cantidad"
+                />
+                <button
+                  class="btn btn-warning"
+                  type="button"
+                  id="btn-comprar"
+                  class="agregar-al-carrito"
+                  onclick="agregarAlCarrito({{product.id}}, {{product.stock}})"
+                >Agregar al carrito x {{product.price}}</button>
 
-            </button>
+              </div>
+              <div class="form-text text-warning">Ingresa la cantidad de
+                productos que deseas agregar al carrito.</div>
+            </div>
+
           </div>
         </div>
 

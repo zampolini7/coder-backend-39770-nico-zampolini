@@ -8,11 +8,19 @@
       },
       {
         "id": 2,
-        "quantity": 1
+        "quantity": 5
       },
       {
         "id": 3,
-        "quantity": 1
+        "quantity": 11
+      },
+      {
+        "id": 5,
+        "quantity": 6
+      },
+      {
+        "id": 8,
+        "quantity": 6
       }
     ]
   }

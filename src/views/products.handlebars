@@ -17,17 +17,17 @@
               <h5 class="card-title">{{this.title}}</h5>
               <p class="card-text">{{this.description}}</p>
               <p class="card-text">Unidades disponibles: {{this.stock}}</p>
+              <p class="card-text">Precio: {{this.price}}</p>
 
               <button
-                id="{id}"
-                class="btn btn-link w-100 d-flex justify-content-center text-decoration-none"
+                id={{this.id}}
+                class="agregar-al-carrito btn btn-link w-100 d-flex justify-content-center text-decoration-none"
               >
 
                 <a
-                  href="#"
+                  href="/products/{{this.id}}"
                   class="btn text-light bg-dark d-flex justify-content-center"
-                  onclick="agregarAlCarrito('{{this.id}}')"
-                >Agregar al carrito x {{this.price}}</a>
+                >Ver detalle del producto </a>
 
               </button>
             </div>
