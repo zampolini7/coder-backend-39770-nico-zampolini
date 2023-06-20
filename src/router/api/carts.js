@@ -78,36 +78,34 @@ router.post("/", async (req, res, next) => {
 });
 router.put("/:cid/product/:pid/:units", async (req, res, next) => {
   try {
-    let { cid, pid, units } = req.params;
+    const { cid, pid, units } = req.params;
     console.log(req.params, "req.para");
-    if (cid && pid && units) {
-      // let productUpdated = await cart.updateProduct(cid, pid, units);
-      let productUpdated = await Cart.findByIdAndUpdate(cid, pid, units);
 
-      if (
-        productUpdated !== null &&
-        !productUpdated.includes(
-          "Las cantidades que quieres ingresar superan el stock"
-        )
-      ) {
-        res.json({
-          status: "200",
-          response: productUpdated,
-        });
-      } else if (
-        productUpdated !== null &&
-        productUpdated.includes(
-          "Las cantidades que quieres ingresar superan el stock"
-        )
-      ) {
-        res.json({
-          status: "404",
-          response: productUpdated,
-        });
+    if (cid && pid && units) {
+      const cart = await Cart.findByIdAndUpdate(
+        `${cid}`,
+        { $set: { [`products.${pid}.units`]: units } },
+        { new: true }
+      );
+
+      if (cart !== null) {
+        if (
+          cart.includes("Las cantidades que quieres ingresar superan el stock")
+        ) {
+          res.json({
+            status: "404",
+            response: cart,
+          });
+        } else {
+          res.json({
+            status: "200",
+            response: cart,
+          });
+        }
       } else {
         res.json({
           status: "404",
-          response: productUpdated,
+          response: "El carrito no fue encontrado",
         });
       }
     } else {

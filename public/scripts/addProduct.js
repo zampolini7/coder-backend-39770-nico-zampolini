@@ -12,7 +12,6 @@ buttonSubmit.addEventListener("click", (e) => {
 async function agregarAlCarrito(productId) {
   const product = document.getElementById("inputCantidad");
   const units = product.value;
-  // Implementa la lógica para agregar el producto al carrito usando el ID recibido
   try {
     const response = await fetch(
       `http://localhost:8060/api/carts?cid=6491cd2966e5508adacac8e0/product?pid=${productId}?un=${units}`,
