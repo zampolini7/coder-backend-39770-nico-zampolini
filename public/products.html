@@ -10,7 +10,7 @@
       integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
       crossorigin="anonymous"
     />
-    <title>PIZZAS</title>
+    <title>INDEX</title>
   </head>
   <body class="d-flex flex-column justify-content-between min-vh-100">
     <nav class="navbar navbar-expand-sm bg-warning">
@@ -54,47 +54,12 @@
       class="w-100 d-flex flex-column align-items-center justify-content-center bg-warning flex-grow-1"
     >
       <div class="bg-warning">
-        <h1 class="pt-5">Welcome to our artisan bakery</h1>
-        <div class="d-flex row flex-row">
-          <div class="d-flex col-12 flex-wrap">
-            <div
-              class="col-4 d-flex justify-content-center p-4"
-              {{!
-              style="max-width: 400px; max-height: 500px"
-              }}
-            >
-              <div
-                class="card justify-content-between h-100"
-                style="width: 15rem"
-              >
-                <img
-                  src="{{this.thumbnail}}"
-                  style="
-                    max-width: 400px;
-                    max-height: 200px;
-                    object-fit: scale-down;
-                  "
-                />
-                <div class="card-body d-flex flex-column justify-content-end">
-                  <h5 class="card-title">{{this.title}}</h5>
-                  <p class="card-text">{{this.description}}</p>
-                  <p class="card-text">Unidades disponibles: {{this.stock}}</p>
-                  <p class="card-text">Precio: {{this.price}}</p>
-
-                  <button
-                    id="{{this._id}}"
-                    class="agregar-al-carrito btn btn-link w-100 d-flex justify-content-center text-decoration-none"
-                  >
-                    <a
-                      href="/products/{{this._id}}"
-                      class="btn text-light bg-dark d-flex justify-content-center"
-                      >Ver detalle del producto
-                    </a>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
+        <h1 class="p-5">Welcome to our artisan bakery</h1>
+        <div class="d-flex w-100 justify-content-center">
+          <div
+            class="d-flex row flex-row justify-content-center"
+            id="products"
+          ></div>
         </div>
       </div>
     </main>
@@ -105,6 +70,7 @@
     integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
     crossorigin="anonymous"
   ></script>
+  <script src="/scripts/products.js"></script>
   <!-- agregar script para renderizado dinámico de barra de navegación con protecciones -->
-  <!-- agregar script para renderizado dinámico de las pizzas -->
+  <!-- agregar script necesario (opcional según funcionalidades que muestren en index) -->
 </html>

@@ -23,7 +23,7 @@ fetch("/api/products")
                 <div class="card-body d-flex flex-column justify-content-end">
                   <h5 class="card-title">${product.title}</h5>
                   <p class="card-text">${product.description}</p>
-                  <p class="card-text">Unidades disponibles: {{this.stock}}</p>
+                  <p class="card-text">Unidades disponibles: ${product.stock}</p>
                   <p class="card-text">Precio: ${product.price}</p>
 
                   <button
