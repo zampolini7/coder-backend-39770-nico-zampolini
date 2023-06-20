@@ -31,7 +31,7 @@ fetch("/api/products")
                     class="agregar-al-carrito btn btn-link w-100 d-flex justify-content-center text-decoration-none"
                   >
                     <a
-                      href="/products/${product._id}"
+                      href="/product.html?id=${product._id}"
                       class="btn text-light bg-dark d-flex justify-content-center"
                       >Ver detalle del producto
                     </a>
