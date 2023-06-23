@@ -1,6 +1,7 @@
 import { Router } from "express";
 // import product from "../../dao/managers/script.js";
 import Product from "../../models/Product.js";
+import validatorCreateProduct from "../../middlewares/validator_product.js";
 const router = Router();
 
 router.get("/", async (req, res, next) => {
@@ -56,18 +57,18 @@ router.get("/:pid", async (req, res, next) => {
   }
 });
 
-router.post("/", async (req, res, next) => {
+router.post("/", validatorCreateProduct, async (req, res, next) => {
   console.log("esta entrando aca");
   try {
     const newProduct = req.body;
     const { title, description, price, thumbnail, stock } = newProduct;
     if (title && description && price && thumbnail && stock) {
       let productCreated = await Product.create({
-        description: description ?? null,
-        title: title ?? null,
-        price: price ?? null,
-        thumbnail: thumbnail ?? null,
-        stock: stock ?? null,
+        description: description,
+        title: title,
+        price: price,
+        thumbnail: thumbnail,
+        stock: stock,
       });
       res.json({
         status: "200",

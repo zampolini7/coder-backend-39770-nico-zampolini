@@ -1,12 +1,14 @@
 const div = document.getElementById("cart");
 
-fetch(`/api/carts/6491cd2966e5508adacac8e0`)
+fetch(`/api/carts/6493373168e55ecc0fb91da8`)
   .then((response) => response.json())
   .then((data) => {
+    console.log(data, "data");
     const cart = data.response;
-    fetch(`/api/products/${cart.product_id}`)
+    fetch(`/api/products/${cart}`)
       .then((response) => response.json())
       .then((data2) => {
+        console.log(data2);
         const product = data2.response;
         const { title, description, price, thumbnail, code } = product;
         const html = `

@@ -82,11 +82,9 @@ router.put("/:cid/product/:pid/:units", async (req, res, next) => {
     console.log(req.params, "req.para");
 
     if (cid && pid && units) {
-      const cart = await Cart.findByIdAndUpdate(
-        `${cid}`,
-        { $set: { [`products.${pid}.units`]: units } },
-        { new: true }
-      );
+      const cart = await Cart.findByIdAndUpdate(cid, data, {
+        new: true,
+      }).populate("user_id", "name -_id");
 
       if (cart !== null) {
         if (
