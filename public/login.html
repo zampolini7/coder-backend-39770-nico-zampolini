@@ -43,7 +43,7 @@
             <li class="nav-item">
               <a class="nav-link text-light" href="#">Log In</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" id="logout">
               <a class="nav-link text-light" href="#">Sign Out</a>
             </li>
             <li class="nav-item">
@@ -61,8 +61,8 @@
         id="loginForm"
       >
         <fieldset class="mb-2 w-100">
-          <label for="mail" class="form-label">Mail</label>
-          <input type="email" class="form-control" name="mail" id="mail" />
+          <label for="email" class="form-label">Mail</label>
+          <input type="email" class="form-control" name="email" id="email" />
         </fieldset>
         <fieldset class="mb-2 w-100">
           <label for="password" class="form-label">Password</label>
@@ -92,4 +92,5 @@
   ></script>
   <!-- agregar script para renderizado dinámico de barra de navegación con protecciones -->
   <script src="/scripts/login.js"></script>
+  <script src="/scripts/logout.js"></script>
 </html>

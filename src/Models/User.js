@@ -7,7 +7,7 @@ const schema = new Schema({
     type: String,
     default:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3pb8EWdg4BxhNGjD1wu5cbi6umMs6ZZuvGiLPG2vebQ&s",
-    required: true,
+    // required: true,
   },
   email: { type: String, required: true, unique: true, index: true },
   age: { type: Number },
