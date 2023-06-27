@@ -2,8 +2,36 @@ import { Router } from "express";
 import User from "../../models/User.js";
 import Validator from "../../middlewares/validator.js";
 import pass_is_8 from "../../middlewares/pass_is_8.js";
+import passport from "passport";
 
 const auth_router = Router();
+
+auth_router.get(
+  "/github",
+  passport.authenticate("github", {
+    scope: ["user:email"],
+  }),
+  (req, res) => {
+    console.log("hola");
+  }
+);
+auth_router.get(
+  "/github/callback",
+  passport.authenticate(
+    "github",
+    { failureRedirect: "api/auth/fail-register-github" },
+    (req, res) => {
+      res.status(200).redirect("/");
+    }
+  )
+);
+
+auth_router.get("/fail-register-github", (req, res) => {
+  res.status(403).json({
+    succes: false,
+    message: "Bad auth",
+  });
+});
 
 auth_router.post("/register", Validator, pass_is_8, async (req, res, next) => {
   try {

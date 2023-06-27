@@ -6,6 +6,8 @@ import morgan from "morgan";
 import index_router from "./router/index.js";
 import session from "express-session";
 import MongoStore from "connect-mongo";
+import initializePassport from "./configs/passport.js";
+import passport from "passport";
 
 const server = express();
 
@@ -21,6 +23,10 @@ server.use(
     }),
   })
 );
+
+initializePassport();
+server.use(passport.initialize());
+server.use(passport.session());
 
 server.use(express.json());
 server.use(express.urlencoded({ extended: true })); // antes tenia '/public', express.urlencoded...
