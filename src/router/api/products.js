@@ -61,11 +61,12 @@ router.post("/", validatorCreateProduct, async (req, res, next) => {
   console.log("esta entrando aca");
   try {
     const newProduct = req.body;
+    console.log(newProduct);
     const { title, description, price, thumbnail, stock } = newProduct;
     if (title && description && price && thumbnail && stock) {
       let productCreated = await Product.create({
-        description: description,
         title: title,
+        description: description,
         price: price,
         thumbnail: thumbnail,
         stock: stock,

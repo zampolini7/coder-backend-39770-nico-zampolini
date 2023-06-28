@@ -4,7 +4,7 @@ function validatorCreateProduct(req, res, next) {
     !req.body.description ||
     !req.body.stock ||
     !req.body.price ||
-    !req.body.url_photo
+    !req.body.thumbnail
   ) {
     return res.json({ status: 400, message: "Complete all fields!" });
   } else {

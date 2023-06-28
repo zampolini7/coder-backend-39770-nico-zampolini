@@ -55,13 +55,13 @@ router.get("/:cid", async (req, res, next) => {
 router.post("/", async (req, res, next) => {
   try {
     const newCart = req.body;
-    console.log(newCart);
-    const { user_id, product_id, quantity } = newCart;
-
+    // console.log(newCart);
+    const { products } = newCart;
+    console.log(products, "products");
     if (newCart) {
       // let cartCreated = await cart.addCart(products ?? []);
-      let cartCreated = await Cart.create({ user_id, product_id, quantity });
-
+      let cartCreated = await Cart.create(newCart);
+      console.log(cartCreated, "cartCreated");
       res.json({
         status: "200",
         response: cartCreated,
