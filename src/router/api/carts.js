@@ -6,7 +6,8 @@ const router = Router();
 router.get("/", async (req, res, next) => {
   try {
     let limit = req.query.limit ?? null;
-    let carts = await Cart.find();
+    let carts = await Cart.find().populate("products.product_id");
+    console.log(carts, "carts");
     if (limit !== null) {
       res.json({
         status: "200",
@@ -55,9 +56,6 @@ router.get("/:cid", async (req, res, next) => {
 router.post("/", async (req, res, next) => {
   try {
     const newCart = req.body;
-    // console.log(newCart);
-    const { products } = newCart;
-    console.log(products, "products");
     if (newCart) {
       // let cartCreated = await cart.addCart(products ?? []);
       let cartCreated = await Cart.create(newCart);

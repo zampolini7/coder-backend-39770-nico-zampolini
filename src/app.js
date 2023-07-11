@@ -8,7 +8,8 @@ import session from "express-session";
 import MongoStore from "connect-mongo";
 import initializePassport from "./configs/passport.js";
 import passport from "passport";
-
+import cookieParser from "cookie-parser";
+import expressSession from "express-session";
 const server = express();
 
 //middlewares
@@ -19,14 +20,29 @@ server.use(
     saveUninitialized: true,
     store: MongoStore.create({
       mongoUrl: process.env.LINK_MONGO,
-      ttl: 10000,
+      ttl: 120000,
     }),
   })
 );
 
 initializePassport();
+
 server.use(passport.initialize());
 server.use(passport.session());
+server.use(cookieParser(process.env.SECRET_COOKIE));
+
+server.use(
+  expressSession({
+    store: MongoStore.create({
+      mongoUrl: process.env.LINK_MONGO,
+      ttl: 120000,
+    }),
+    secret: process.env.SECRET_SESSION,
+    resave: true, //permite mantener la session activa
+    saveUninitialized: true, // permite guardar una no session o una vacia.
+    ttl: 604800000, // tiempo de vida de la session
+  })
+);
 
 server.use(express.json());
 server.use(express.urlencoded({ extended: true })); // antes tenia '/public', express.urlencoded...
