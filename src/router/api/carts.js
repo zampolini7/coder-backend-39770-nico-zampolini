@@ -3,10 +3,11 @@ import { Router } from "express";
 import Cart from "../../models/Cart.js";
 const router = Router();
 
-router.get("/", (req, res, next) => {
+router.get("/", async (req, res, next) => {
   try {
     let limit = req.query.limit ?? null;
-    let carts = Cart.find();
+    let carts = await Cart.find().populate("products.product_id");
+    console.log(carts, "carts");
     if (limit !== null) {
       res.json({
         status: "200",
@@ -55,13 +56,10 @@ router.get("/:cid", async (req, res, next) => {
 router.post("/", async (req, res, next) => {
   try {
     const newCart = req.body;
-    const { products } = newCart;
-    console.log(products);
-
-    if (products) {
+    if (newCart) {
       // let cartCreated = await cart.addCart(products ?? []);
-      let cartCreated = await Cart.Create(products ?? []);
-
+      let cartCreated = await Cart.create(newCart);
+      console.log(cartCreated, "cartCreated");
       res.json({
         status: "200",
         response: cartCreated,
@@ -78,36 +76,32 @@ router.post("/", async (req, res, next) => {
 });
 router.put("/:cid/product/:pid/:units", async (req, res, next) => {
   try {
-    let { cid, pid, units } = req.params;
+    const { cid, pid, units } = req.params;
     console.log(req.params, "req.para");
-    if (cid && pid && units) {
-      // let productUpdated = await cart.updateProduct(cid, pid, units);
-      let productUpdated = await Cart.findByIdAndUpdate(cid, pid, units);
 
-      if (
-        productUpdated !== null &&
-        !productUpdated.includes(
-          "Las cantidades que quieres ingresar superan el stock"
-        )
-      ) {
-        res.json({
-          status: "200",
-          response: productUpdated,
-        });
-      } else if (
-        productUpdated !== null &&
-        productUpdated.includes(
-          "Las cantidades que quieres ingresar superan el stock"
-        )
-      ) {
-        res.json({
-          status: "404",
-          response: productUpdated,
-        });
+    if (cid && pid && units) {
+      const cart = await Cart.findByIdAndUpdate(cid, data, {
+        new: true,
+      }).populate("user_id", "name -_id");
+
+      if (cart !== null) {
+        if (
+          cart.includes("Las cantidades que quieres ingresar superan el stock")
+        ) {
+          res.json({
+            status: "404",
+            response: cart,
+          });
+        } else {
+          res.json({
+            status: "200",
+            response: cart,
+          });
+        }
       } else {
         res.json({
           status: "404",
-          response: productUpdated,
+          response: "El carrito no fue encontrado",
         });
       }
     } else {

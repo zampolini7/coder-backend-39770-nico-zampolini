@@ -1,15 +1,16 @@
 import { Router } from "express";
-import api_router from "./api/index.js";
-import view_router from "./views/index.js";
+import auth_router from "./api/auth.js";
+import products_router from "./api/products.js";
+import cart_router from "./api/carts.js";
+import cookies_router from "./api/cookies.js";
+import sessions_router from "./api/session.js";
 
-const router = Router();
+const index_router = Router();
 
-router.use("/api", api_router);
-router.use("/", view_router);
+index_router.use("/auth", auth_router);
+index_router.use("/products", products_router);
+index_router.use("/carts", cart_router);
+index_router.use("/cookies", cookies_router);
+index_router.use("/session", sessions_router);
 
-// router.get('/', (req, res) => {
-//     const cartItemCount = 5
-//     res.render('home', { cartItemCount })
-// })
-
-export default router;
+export default index_router;

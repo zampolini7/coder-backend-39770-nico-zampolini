@@ -10,7 +10,7 @@
       integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
       crossorigin="anonymous"
     />
-    <title>INDEX</title>
+    <title>REGISTER</title>
   </head>
   <body class="d-flex flex-column justify-content-between min-vh-100">
     <nav class="navbar navbar-expand-sm bg-warning">
@@ -38,7 +38,7 @@
               <a class="nav-link text-light" href="/products.html">Products</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-light" href="/register.html">Register</a>
+              <a class="nav-link text-light" href="#">Register</a>
             </li>
             <li class="nav-item">
               <a class="nav-link text-light" href="/login.html">Log In</a>
@@ -54,17 +54,46 @@
       </div>
     </nav>
     <main
-      class="w-100 d-flex flex-column align-items-center justify-content-center bg-warning flex-grow-1"
+      class="d-flex flex-column justify-content-center align-items-center flex-grow-1"
     >
-      <div class="bg-warning">
-        <h1 class="p-5">Welcome to our artisan bakery</h1>
-        <div class="d-flex w-100 justify-content-center">
-          <div
-            class="d-flex row flex-row justify-content-center"
-            id="products"
-          ></div>
+      <form
+        class="d-flex flex-column justify-content-center align-items-center w-50"
+        id="registerForm"
+      >
+        <fieldset class="mb-2 w-100">
+          <label for="name" class="form-label">Name</label>
+          <input type="text" class="form-control" name="name" id="name" />
+        </fieldset>
+        <fieldset class="mb-2 w-100">
+          <label for="photo" class="form-label">URL photo</label>
+          <input type="text" class="form-control" name="photo" id="photo" />
+        </fieldset>
+        <fieldset class="mb-2 w-100">
+          <label for="age" class="form-label">Age</label>
+          <input type="number" class="form-control" name="age" id="age" />
+        </fieldset>
+        <fieldset class="mb-2 w-100">
+          <label for="email" class="form-label">E-Mail</label>
+          <input type="email" class="form-control" name="email" id="email" />
+        </fieldset>
+        <fieldset class="mb-2 w-100">
+          <label for="password" class="form-label">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            name="password"
+            id="password"
+          />
+        </fieldset>
+        <div class="d-flex justify-content-between w-100">
+          <input
+            type="button"
+            id="register"
+            class="btn btn-danger mt-2 w-100"
+            value="Register!"
+          />
         </div>
-      </div>
+      </form>
     </main>
     <footer class="bg-warning p-2 text-center">E-COMMERCE</footer>
   </body>
@@ -73,10 +102,6 @@
     integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
     crossorigin="anonymous"
   ></script>
-  <script src="/scripts/products.js"></script>
-  <script src="/scripts/logout.js"></script>
-  <!-- <script src="/scripts/insertManyProducts.js"></script> -->
-
   <!-- agregar script para renderizado dinámico de barra de navegación con protecciones -->
-  <!-- agregar script necesario (opcional según funcionalidades que muestren en index) -->
+  <script src="/scripts/register.js"></script>
 </html>

@@ -1,33 +1,33 @@
 import { Router } from "express";
 // import product from "../../dao/managers/script.js";
 import Product from "../../models/Product.js";
+import validatorCreateProduct from "../../middlewares/validator_product.js";
+import passport from "passport";
+import auth from "../../middlewares/auth.js";
 const router = Router();
 
-router.get("/", (req, res, next) => {
-  try {
-    let products = Product.find();
-    let limit = req.query.limit ?? null;
-    if (limit !== null) {
-      res.json({
-        status: "200",
-        response: products.slice(0, limit),
+router.get(
+  "/",
+  // passport.authenticate("jwt", { session: false }),
+  auth,
+  async (req, res, next) => {
+    let page = req.query.page ?? 1;
+    let limit = req.query.limit ?? 5;
+    let title = req.query.title ? new RegExp(req.query.title, "i") : "";
+
+    console.log("entra aca o ne");
+    try {
+      let products = await Product.paginate({}, { limit, page });
+      console.log(products);
+      return res.status(200).json({
+        succes: true,
+        response: products.docs,
       });
+    } catch (error) {
+      next(error);
     }
-    if (limit === null && products.length > 0) {
-      res.json({
-        status: "200",
-        response: products,
-      });
-    } else {
-      res.json({
-        status: "200",
-        response: "No hay productos en el carrito",
-      });
-    }
-  } catch (error) {
-    next(error);
   }
-});
+);
 
 //.get para Nuevo producto
 router.get("/new_product", (req, res) => {
@@ -55,17 +55,18 @@ router.get("/:pid", async (req, res, next) => {
   }
 });
 
-router.post("/", async (req, res, next) => {
+router.post("/", auth, validatorCreateProduct, async (req, res, next) => {
   try {
     const newProduct = req.body;
+    console.log(newProduct);
     const { title, description, price, thumbnail, stock } = newProduct;
     if (title && description && price && thumbnail && stock) {
       let productCreated = await Product.create({
-        description: description ?? null,
-        title: title ?? null,
-        price: price ?? null,
-        thumbnail: thumbnail ?? null,
-        stock: stock ?? null,
+        title: title,
+        description: description,
+        price: price,
+        thumbnail: thumbnail,
+        stock: stock,
       });
       res.json({
         status: "200",

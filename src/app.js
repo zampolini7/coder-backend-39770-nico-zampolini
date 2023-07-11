@@ -1,28 +1,56 @@
 import express from "express";
-// import router from "./routes/index_router.js";
-import router from "./router/index.js";
 import errorHandler from "./middlewares/errorHandler.js";
 import not_found_handler from "./middlewares/notFoundHandle.js";
-import { engine } from "express-handlebars";
-import { __dirname } from "./utils.js";
 import "dotenv/config.js";
-import logger from "morgan";
-
+import morgan from "morgan";
+import index_router from "./router/index.js";
+import session from "express-session";
+import MongoStore from "connect-mongo";
+import initializePassport from "./configs/passport.js";
+import passport from "passport";
+import cookieParser from "cookie-parser";
+import expressSession from "express-session";
 const server = express();
 
-//template engine
-server.engine("handlebars", engine());
-server.set("view engine", "handlebars");
-server.set("views", __dirname + "/views");
-
 //middlewares
-server.use("/public", express.static("public"));
-server.use(express.urlencoded({ extended: true })); // antes tenia '/public', express.urlencoded...
+server.use(
+  session({
+    secret: process.env.SECRET_SESSION,
+    resave: true,
+    saveUninitialized: true,
+    store: MongoStore.create({
+      mongoUrl: process.env.LINK_MONGO,
+      ttl: 120000,
+    }),
+  })
+);
+
+initializePassport();
+
+server.use(passport.initialize());
+server.use(passport.session());
+server.use(cookieParser(process.env.SECRET_COOKIE));
+
+server.use(
+  expressSession({
+    store: MongoStore.create({
+      mongoUrl: process.env.LINK_MONGO,
+      ttl: 120000,
+    }),
+    secret: process.env.SECRET_SESSION,
+    resave: true, //permite mantener la session activa
+    saveUninitialized: true, // permite guardar una no session o una vacia.
+    ttl: 604800000, // tiempo de vida de la session
+  })
+);
+
 server.use(express.json());
-server.use("/", router);
+server.use(express.urlencoded({ extended: true })); // antes tenia '/public', express.urlencoded...
+server.use("/", express.static("public"));
+server.use(morgan("dev"));
+
+server.use("/api", index_router);
 server.use(errorHandler);
 server.use(not_found_handler);
-
-server.use(logger("dev"));
 
 export default server;

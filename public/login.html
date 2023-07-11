@@ -10,7 +10,7 @@
       integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
       crossorigin="anonymous"
     />
-    <title>INDEX</title>
+    <title>LOG IN</title>
   </head>
   <body class="d-flex flex-column justify-content-between min-vh-100">
     <nav class="navbar navbar-expand-sm bg-warning">
@@ -41,7 +41,7 @@
               <a class="nav-link text-light" href="/register.html">Register</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-light" href="/login.html">Log In</a>
+              <a class="nav-link text-light" href="#">Log In</a>
             </li>
             <li class="nav-item" id="logout">
               <a class="nav-link text-light" href="/index.html">Sign Out</a>
@@ -54,16 +54,44 @@
       </div>
     </nav>
     <main
-      class="w-100 d-flex flex-column align-items-center justify-content-center bg-warning flex-grow-1"
+      class="d-flex flex-column justify-content-center align-items-center flex-grow-1"
     >
-      <div class="bg-warning">
-        <h1 class="p-5">Welcome to our artisan bakery</h1>
-        <div class="d-flex w-100 justify-content-center">
-          <div
-            class="d-flex row flex-row justify-content-center"
-            id="products"
-          ></div>
+      <form
+        class="d-flex flex-column justify-content-center align-items-center w-50"
+        id="loginForm"
+      >
+        <fieldset class="mb-2 w-100">
+          <label for="email" class="form-label">Mail</label>
+          <input type="email" class="form-control" name="email" id="email" />
+        </fieldset>
+        <fieldset class="mb-2 w-100">
+          <label for="password" class="form-label">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            name="password"
+            id="password"
+          />
+        </fieldset>
+        <div class="d-flex justify-content-between w-100">
+          <input
+            type="button"
+            id="login"
+            class="btn btn-danger mt-2 w-100"
+            value="Log In!"
+          />
         </div>
+      </form>
+      <div class="d-flex justify-content-between w-59 mt-2">
+        <button
+          type="button"
+          id="login-github"
+          class="btn btn-secondary mt-2 w-100 d-flex justify-content-between align-items-center"
+          value="Login github!"
+        >
+          <img src="img/github.svg" alt="Descripción del icono" class="me-2" />
+          <span> Login github! </span>
+        </button>
       </div>
     </main>
     <footer class="bg-warning p-2 text-center">E-COMMERCE</footer>
@@ -73,10 +101,8 @@
     integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
     crossorigin="anonymous"
   ></script>
-  <script src="/scripts/products.js"></script>
-  <script src="/scripts/logout.js"></script>
-  <!-- <script src="/scripts/insertManyProducts.js"></script> -->
-
   <!-- agregar script para renderizado dinámico de barra de navegación con protecciones -->
-  <!-- agregar script necesario (opcional según funcionalidades que muestren en index) -->
+  <script src="/scripts/login.js"></script>
+  <script src="/scripts/loginGithub.js"></script>
+  <script src="/scripts/logout.js"></script>
 </html>

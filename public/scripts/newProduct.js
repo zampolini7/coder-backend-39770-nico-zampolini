@@ -10,7 +10,9 @@ form.addEventListener("submit", async (e) => {
 
   try {
     const response = await fetch(
-      `http://localhost:${process.env.PORT}/api/products/`,
+      // `http://localhost:${process.env.PORT}/api/products/`,
+      `http://localhost:8060/api/products/`,
+
       {
         method: "POST",
         headers: {
@@ -28,7 +30,7 @@ form.addEventListener("submit", async (e) => {
     );
     if (response.ok) {
       alert("product created");
-      window.location.href = "/products";
+      window.location.href = "/index.html";
     } else {
       const errorData = await response.json();
       alert(`Error: ${errorData.message}`);
