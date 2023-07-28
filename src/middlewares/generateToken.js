@@ -5,7 +5,7 @@ export default (req, res, next) => {
     {
       email: req.body.email,
     },
-    process.env.JWT_SECRET,
+    process.env.SECRET_JWT,
     { expiresIn: 60 * 60 * 1000 }
   );
   req.token = token;

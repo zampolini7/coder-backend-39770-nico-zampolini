@@ -44,7 +44,7 @@ export default function () {
   );
 
   passport.use(
-    "login",
+    "signin",
     new Strategy(
       {
         usernameField: "email",
@@ -75,6 +75,7 @@ export default function () {
       },
       async (jwt_payload, done) => {
         try {
+          console.log(jwt_payload, "jtwt_payload");
           let one = await User.findOne({ email: jwt_payload.email });
           if (one) {
             delete one.password;

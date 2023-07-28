@@ -12,7 +12,7 @@ import cookieParser from "cookie-parser";
 import expressSession from "express-session";
 const server = express();
 
-//middlewares
+// middlewares
 server.use(
   session({
     secret: process.env.SECRET_SESSION,

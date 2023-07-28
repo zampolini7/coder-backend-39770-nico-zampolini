@@ -1,9 +1,9 @@
 fetch("/api/products")
   .then((res) => res.json())
   .then((data) => {
-    console.log(data);
+    console.log(data, "datita");
     const products = document.getElementById("products");
-    data.response.forEach((product) => {
+    data.payload.forEach((product) => {
       const div = document.createElement("div");
       div.className = "col-4 d-flex justify-content-center p-4";
       div.style = "max-width: 400px; max-height: 500px";
