@@ -25,12 +25,16 @@ export default class RouterCustom {
 
   handlePolicies = (policies) => (req, res, next) => {
     // ['USER'] ['USER', 'USER_PREMIUN']
+    console.log(policies, "policies");
     if (policies[0] === "PUBLIC") return next();
     const authHeader = req.headers.authorization;
-    if (!authHeader)
+    if (!authHeader) {
+      console.log(req.headers.authorization);
+      console.log("entro aca");
       return res
         .status(401)
         .send({ status: "error", error: "Unauthorization" });
+    }
     // 'BEARER lakhjsdosadfjasdfsad'
     const token = authHeader.split(" ")[1];
     let user = jwt.verify(token, config.privateKeyJwt);

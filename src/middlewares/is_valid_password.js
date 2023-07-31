@@ -1,5 +1,5 @@
 import { compare } from "bcrypt";
-import User from "../models/User.js";
+import User from "../dao/Mongo/Models/User.js";
 
 // export default (req, res, next) => {
 //   console.log(req.session, "reqeqe");

@@ -1,6 +1,6 @@
 import { Router } from "express";
 // import cart from "../../dao/managers/cartScript.js";
-import Cart from "../../models/Cart.js";
+import Cart from "../../dao/Mongo/models/Cart.js";
 const router = Router();
 
 router.get("/", async (req, res, next) => {

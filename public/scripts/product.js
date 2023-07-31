@@ -1,10 +1,12 @@
 const params = new URLSearchParams(location.search);
 const pid = params.get("id");
+console.log(pid);
 fetch(`/api/products/${pid}`)
   .then((res) => res.json())
   .then((data) => {
+    console.log(data);
     // const dataProudct = data.response[0];
-    const product = data.response;
+    const product = data.payload;
     const productDiv = document.getElementById("product");
     const div = document.createElement("div");
     const innerHTML = `

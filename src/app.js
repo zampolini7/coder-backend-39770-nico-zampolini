@@ -11,6 +11,7 @@ import passport from "passport";
 import cookieParser from "cookie-parser";
 import expressSession from "express-session";
 const server = express();
+import cors from "cors";
 
 // middlewares
 server.use(
@@ -48,6 +49,7 @@ server.use(express.json());
 server.use(express.urlencoded({ extended: true })); // antes tenia '/public', express.urlencoded...
 server.use("/", express.static("public"));
 server.use(morgan("dev"));
+server.use(cors());
 
 server.use("/api", index_router);
 server.use(errorHandler);

@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import { commander } from "../commander.js";
+import MongoSingleton from "./MongoSingleton.js";
 
 const { mode } = commander.opts();
 
@@ -13,12 +14,13 @@ export default {
   privateKeyJwt: process.env.PRIVATE_KEY_JWT || "",
   PORT: process.env.PORT || 8060,
   MONGO_URL: process.env.MONGO_URL || "",
-  connectDB: async () => {
-    try {
-      await mongoose.connect(process.env.LINK_MONGO);
-      console.log("base de datos conectada.. en el puerto", process.env.PORT);
-    } catch (error) {
-      console.log("error de connection");
-    }
-  },
+  // connectDB: async () => {
+  //   try {
+  //     await mongoose.connect(process.env.LINK_MONGO);
+  //     console.log("base de datos conectada.. en el puerto", process.env.PORT);
+  //   } catch (error) {
+  //     console.log("error de connection");
+  //   }
+  // },
+  connectDB: () => MongoSingleton.getInstance(),
 };
