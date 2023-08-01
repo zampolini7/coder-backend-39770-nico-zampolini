@@ -1,16 +1,16 @@
-import authJWT from "../../middlewares/isAuthJtw.js";
-import passport_call from "../../middlewares/passport_call.js";
-import validatorCreateProduct from "../../middlewares/validator_product.js";
-import Router from "../RouterCustom/index.js";
+import authJWT from "../../../middlewares/isAuthJtw.js";
+import passport_call from "../../../middlewares/passport_call.js";
+import validatorCreateProduct from "../../../middlewares/validator_product.js";
+import Router from "../../RouterCustom/index.js";
 import {
   getProducts,
   getProduct,
   createProduct,
   updateProduct,
   deleteProduct,
-} from "../../controllers/products.controller.js";
+} from "../../../controllers/products.controller.js";
 
-export default class ProductRouter extends Router {
+class ProductRouter extends Router {
   init() {
     this.get("/", ["PUBLIC"], getProducts);
 
@@ -36,3 +36,7 @@ export default class ProductRouter extends Router {
     this.delete("/:pid", ["USER_PREMIUM"], deleteProduct);
   }
 }
+
+const productRouter = new ProductRouter();
+const router = productRouter.getRouter();
+export default router;

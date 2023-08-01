@@ -1,10 +1,10 @@
 import { Router } from "express";
 // import product from "../../dao/managers/script.js";
 import Product from "../../models/Product.js";
-import validatorCreateProduct from "../../middlewares/validator_product.js";
+import validatorCreateProduct from "../../../middlewares/validator_product.js";
 import passport from "passport";
-import auth from "../../middlewares/auth.js";
-import passport_call from "../../middlewares/passport_call.js";
+import auth from "../../../middlewares/auth.js";
+import passport_call from "../../../middlewares/passport_call.js";
 
 const router = Router();
 

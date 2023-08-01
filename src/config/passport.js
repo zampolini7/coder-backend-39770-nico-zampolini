@@ -19,29 +19,29 @@ export default function () {
     }
   });
 
-  // passport.use(
-  //   "register",
-  //   new Strategy(
-  //     {
-  //       passReqToCallback: true,
-  //       usernameField: "email",
-  //     },
-  //     async (req, username, password, done) => {
-  //       try {
-  //         let one = await User.findOne({ email: username });
-  //         if (one) {
-  //           return done(null, false);
-  //         } else {
-  //           let user = await User.create(req.body);
-  //           delete user.password;
-  //           return done(null, user);
-  //         }
-  //       } catch (error) {
-  //         return done(error);
-  //       }
-  //     }
-  //   )
-  // );
+  passport.use(
+    "register",
+    new Strategy(
+      {
+        passReqToCallback: true,
+        usernameField: "email",
+      },
+      async (req, username, password, done) => {
+        try {
+          let one = await User.findOne({ email: username });
+          if (one) {
+            return done(null, false);
+          } else {
+            let user = await User.create(req.body);
+            delete user.password;
+            return done(null, user);
+          }
+        } catch (error) {
+          return done(error);
+        }
+      }
+    )
+  );
 
   passport.use(
     "signin",

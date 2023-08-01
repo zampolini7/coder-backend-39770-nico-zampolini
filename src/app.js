@@ -6,7 +6,7 @@ import morgan from "morgan";
 import index_router from "./router/index.js";
 import session from "express-session";
 import MongoStore from "connect-mongo";
-import initializePassport from "./configs/passport.js";
+import initializePassport from "./config/passport.js";
 import passport from "passport";
 import cookieParser from "cookie-parser";
 import expressSession from "express-session";

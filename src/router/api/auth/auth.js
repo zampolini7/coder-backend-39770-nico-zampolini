@@ -1,12 +1,12 @@
 import { Router } from "express";
-import User from "../../dao/Mongo/Models/User.js";
-import Validator from "../../middlewares/validator.js";
-import pass_is_8 from "../../middlewares/pass_is_8.js";
+import User from "../../../dao/Mongo/Models/User.js";
+import Validator from "../../../middlewares/validator.js";
+import pass_is_8 from "../../../middlewares/pass_is_8.js";
 import passport from "passport";
-import passwordIsOk from "../../middlewares/is_valid_password.js";
-import generateToken from "../../middlewares/generateToken.js";
-import createHash from "../../middlewares/create_hash.js";
-import is_valid_password from "../../middlewares/is_valid_password.js";
+import passwordIsOk from "../../../middlewares/is_valid_password.js";
+import generateToken from "../../../middlewares/generateToken.js";
+import createHash from "../../../middlewares/create_hash.js";
+import is_valid_password from "../../../middlewares/is_valid_password.js";
 const auth_router = Router();
 
 auth_router.get(
