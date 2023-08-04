@@ -1,11 +1,12 @@
 import { Router } from "express";
-import User from "../../models/User.js";
-import Validator from "../../middlewares/validator.js";
-import pass_is_8 from "../../middlewares/pass_is_8.js";
+import User from "../../../dao/Mongo/Models/User.js";
+import Validator from "../../../middlewares/validator.js";
+import pass_is_8 from "../../../middlewares/pass_is_8.js";
 import passport from "passport";
-import passwordIsOk from "../../middlewares/passwordIsOk.js";
-import generateToken from "../../middlewares/generateToken.js";
-import createHash from "../../middlewares/passwordToHash.js";
+import passwordIsOk from "../../../middlewares/is_valid_password.js";
+import generateToken from "../../../middlewares/generateToken.js";
+import createHash from "../../../middlewares/create_hash.js";
+import is_valid_password from "../../../middlewares/is_valid_password.js";
 const auth_router = Router();
 
 auth_router.get(
@@ -40,41 +41,45 @@ auth_router.post(
   Validator,
   pass_is_8,
   createHash,
-  async (req, res, next) => {
-    try {
-      await User.create(req.body);
-      return res.status(201).json({
-        success: true,
-        message: "User created",
-      });
-    } catch (error) {
-      next(error);
-    }
-  }
+  passport.authenticate("register", {
+    failureRedirect: "/api/auth/fail-register",
+  }),
+  (req, res) =>
+    res.status(201).json({
+      success: true,
+      message: "User created",
+    })
 );
 
+auth_router.get("/fail-register", (req, res) => {
+  res.status(403).json({
+    succes: false,
+    message: "Bad auth",
+  });
+});
+
 auth_router.post(
+  //puede haber validacion de campos obligatorios y de passsword con 8 caracteres
   "/signin",
+  passport.authenticate("signin", {
+    failureRedirect: "/api/auth/fail-login",
+  }),
   // passwordIsOk,
-  async (req, res, next) => {
+  // is_valid_password,
+  generateToken,
+  (req, res, next) => {
+    console.log(req.token, "res");
     try {
-      const { email } = req.body;
-      console.log(email, "elmail");
-      const one = await User.findOne({ email });
-      if (one) {
-        req.session.email = email;
-        req.session.role = one.role;
-        return res.status(200).json({
+      return res
+        .status(200)
+        .cookie("token", req.token, {
+          maxAge: 60 * 60 * 1000,
+          httpOnly: true,
+        })
+        .json({
           success: true,
-          message: "User logged",
-          payload: req.session,
+          message: req.token,
         });
-      } else {
-        return res.status(404).json({
-          success: false,
-          message: "User not found",
-        });
-      }
     } catch (error) {
       next(error);
     }
@@ -93,6 +98,7 @@ auth_router.post(
         .status(200)
         .cookie("token", req.token, {
           maxAge: 60 * 60 * 1000,
+          httpOnly: true,
         })
         .json({
           success: true,

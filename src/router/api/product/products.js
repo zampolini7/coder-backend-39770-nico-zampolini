@@ -1,33 +1,30 @@
 import { Router } from "express";
 // import product from "../../dao/managers/script.js";
 import Product from "../../models/Product.js";
-import validatorCreateProduct from "../../middlewares/validator_product.js";
+import validatorCreateProduct from "../../../middlewares/validator_product.js";
 import passport from "passport";
-import auth from "../../middlewares/auth.js";
+import auth from "../../../middlewares/auth.js";
+import passport_call from "../../../middlewares/passport_call.js";
+
 const router = Router();
 
-router.get(
-  "/",
-  // passport.authenticate("jwt", { session: false }),
-  auth,
-  async (req, res, next) => {
-    let page = req.query.page ?? 1;
-    let limit = req.query.limit ?? 5;
-    let title = req.query.title ? new RegExp(req.query.title, "i") : "";
+router.get("/", passport_call("jwt"), auth, async (req, res, next) => {
+  let page = req.query.page ?? 1;
+  let limit = req.query.limit ?? 5;
+  let title = req.query.title ? new RegExp(req.query.title, "i") : "";
 
-    console.log("entra aca o ne");
-    try {
-      let products = await Product.paginate({}, { limit, page });
-      console.log(products);
-      return res.status(200).json({
-        succes: true,
-        response: products.docs,
-      });
-    } catch (error) {
-      next(error);
-    }
+  console.log("entra aca o ne");
+  try {
+    let products = await Product.paginate({}, { limit, page });
+    console.log(products);
+    return res.status(200).json({
+      succes: true,
+      response: products.docs[0],
+    });
+  } catch (error) {
+    next(error);
   }
-);
+});
 
 //.get para Nuevo producto
 router.get("/new_product", (req, res) => {

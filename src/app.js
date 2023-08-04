@@ -6,13 +6,15 @@ import morgan from "morgan";
 import index_router from "./router/index.js";
 import session from "express-session";
 import MongoStore from "connect-mongo";
-import initializePassport from "./configs/passport.js";
+import initializePassport from "./config/passport.js";
 import passport from "passport";
 import cookieParser from "cookie-parser";
 import expressSession from "express-session";
 const server = express();
+import cors from "cors";
+import { errorMiddleware } from "./middlewares/errors/index.js";
 
-//middlewares
+// middlewares
 server.use(
   session({
     secret: process.env.SECRET_SESSION,
@@ -48,9 +50,11 @@ server.use(express.json());
 server.use(express.urlencoded({ extended: true })); // antes tenia '/public', express.urlencoded...
 server.use("/", express.static("public"));
 server.use(morgan("dev"));
+server.use(cors());
 
 server.use("/api", index_router);
-server.use(errorHandler);
+server.use(errorMiddleware);
+// server.use(errorHandler);
 server.use(not_found_handler);
 
 export default server;

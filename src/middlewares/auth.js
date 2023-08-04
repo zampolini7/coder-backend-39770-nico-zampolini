@@ -1,6 +1,5 @@
 export default function auth(req, res, next) {
-  console.log(req.session);
-  if (req.session?.email === "admin@admin.com") {
+  if (req.user.email === "admin2@admin.com") {
     return next();
   }
   return res.status(401).json({

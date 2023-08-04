@@ -1,4 +1,4 @@
-import { model, Schema } from "mongoose";
+import { model, Schema, Types } from "mongoose";
 
 const collection = "users";
 const schema = new Schema({
@@ -11,7 +11,8 @@ const schema = new Schema({
   },
   email: { type: String, required: true, unique: true, index: true },
   age: { type: Number },
-  role: { type: Number, default: 0 },
+  role: { type: String, default: "user" },
+  cart: { type: Types.ObjectId, ref: "carts", default: null },
   password: { type: String, required: true },
 });
 

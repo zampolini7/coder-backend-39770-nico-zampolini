@@ -1,8 +1,8 @@
 import passport from "passport";
 import GHStrategy from "passport-github2";
-import User from "../models/User.js";
 import { Strategy } from "passport-local";
 import jwt from "passport-jwt";
+import User from "../dao/Mongo/Models/User.js";
 
 const { GH_CLIENT_ID, GH_CLIENT_SECRET, GITHUB_CALLBACK } = process.env;
 
@@ -44,7 +44,7 @@ export default function () {
   );
 
   passport.use(
-    "login",
+    "signin",
     new Strategy(
       {
         usernameField: "email",
@@ -59,31 +59,6 @@ export default function () {
           }
         } catch (error) {
           return done(error, null);
-        }
-      }
-    )
-  );
-
-  passport.use(
-    "jwt",
-    new jwt.Strategy(
-      {
-        secretOrKey: process.env.SECRET_JWT,
-        jwtFromRequest: jwt.ExtractJwt.fromExtractors([
-          (req) => req?.cookies["token"],
-        ]),
-      },
-      async (jwt_payload, done) => {
-        try {
-          let one = await User.findOne({ email: jwt_payload.email });
-          if (one) {
-            delete one.password;
-            return done(null, one);
-          } else {
-            return done(null, false);
-          }
-        } catch (error) {
-          done(error, false);
         }
       }
     )
@@ -116,4 +91,31 @@ export default function () {
       }
     )
   );
+  passport.use(
+    "jwt",
+    new jwt.Strategy(
+      {
+        secretOrKey: process.env.SECRET_JWT,
+        jwtFromRequest: jwt.ExtractJwt.fromExtractors([
+          (req) => req?.cookies["token"],
+        ]),
+      },
+      async (jwt_payload, done) => {
+        try {
+          console.log(jwt_payload, "jtwt_payload");
+          let one = await User.findOne({ email: jwt_payload.email });
+          if (one) {
+            delete one.password;
+            return done(null, one);
+          } else {
+            return done(null, false);
+          }
+        } catch (error) {
+          done(error, false);
+        }
+      }
+    )
+  );
+
+  //separar en funciones diferentes
 }
