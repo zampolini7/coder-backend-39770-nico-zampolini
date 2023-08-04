@@ -12,6 +12,7 @@ import cookieParser from "cookie-parser";
 import expressSession from "express-session";
 const server = express();
 import cors from "cors";
+import { errorMiddleware } from "./middlewares/errors/index.js";
 
 // middlewares
 server.use(
@@ -52,7 +53,8 @@ server.use(morgan("dev"));
 server.use(cors());
 
 server.use("/api", index_router);
-server.use(errorHandler);
+server.use(errorMiddleware);
+// server.use(errorHandler);
 server.use(not_found_handler);
 
 export default server;

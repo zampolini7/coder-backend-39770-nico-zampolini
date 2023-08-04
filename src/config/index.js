@@ -7,7 +7,7 @@ const { mode } = commander.opts();
 
 console.log(mode);
 dotenv.config({
-  path: mode === "development" ? "./env.development" : "./.env.production",
+  path: mode === "development" ? "./.env.development" : "./.env.production",
 });
 
 export default {
@@ -23,4 +23,5 @@ export default {
   //   }
   // },
   connectDB: () => MongoSingleton.getInstance(),
+  persistence: process.env.PERSISTENCE,
 };

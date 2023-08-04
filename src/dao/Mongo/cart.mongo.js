@@ -4,22 +4,22 @@ class CartMongo {
   constructor() {
     this.cartModel = Cart;
   }
-  getCarts = async (limit = 5) => {
+  get = async (limit = 5) => {
     return await this.cartModel.find();
 
     // .paginate({}, { limit })
     // .populate("products.product_id");
   };
 
-  getCart = async (cid) => {
+  getById = async (cid) => {
     return await this.cartModel.findById(cid);
   };
 
-  createCart = async (newCart) => {
+  create = async (newCart) => {
     return await this.cartModel.create(newCart);
   };
 
-  updateCart = async (cid, updateToCart) => {
+  update = async (cid, updateToCart) => {
     return await this.cartModel
       .findByIdAndUpdate(cid, data, {
         new: true,
@@ -27,7 +27,7 @@ class CartMongo {
       .populate("user_id", "name -_id");
   };
 
-  deleteCart = async (cid) => {
+  delete = async (cid) => {
     return await this.cartModel.findByIdAndDelete(cid);
   };
 }

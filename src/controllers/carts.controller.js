@@ -7,7 +7,7 @@ class CartController {
   getCarts = async (req, res, next) => {
     try {
       let limit = req.query.limit ?? null;
-      let carts = await this.cartService.getCarts(limit);
+      let carts = await this.cartService.get(limit);
       console.log(carts, "carts");
       if (limit !== null) {
         res.json({
@@ -36,7 +36,7 @@ class CartController {
       let { cid } = req.params;
       console.log(cid);
       // let cart2 = await cart.getCartById(cid);
-      let cart2 = await this.cartService.getCart(cid);
+      let cart2 = await this.cartService.getById(cid);
 
       if (cart2 !== null) {
         res.json({
@@ -59,7 +59,7 @@ class CartController {
       const newCart = req.body;
       if (newCart) {
         // let cartCreated = await cart.addCart(products ?? []);
-        let cartCreated = await this.cartService.createCart(newCart);
+        let cartCreated = await this.cartService.create(newCart);
         console.log(cartCreated, "cartCreated");
         res.json({
           status: "200",
@@ -82,7 +82,7 @@ class CartController {
       console.log(req.params, "req.para");
 
       if (cid && pid && units) {
-        const cart = await this.cartService.updateCart(cid, pid, units);
+        const cart = await this.cartService.update(cid, pid, units);
 
         if (cart !== null) {
           if (
@@ -123,7 +123,7 @@ class CartController {
 
       if (cid && pid && units) {
         // let productDeleted = await cart.deleteProduct(cid, pid, units);
-        let productDeleted = await this.cartService.deleteCart(cid, pid, units);
+        let productDeleted = await this.cartService.delete(cid, pid, units);
         if (
           productDeleted !== null &&
           !productDeleted.includes(
