@@ -3,7 +3,7 @@ import { Router } from "express";
 import Product from "../../models/Product.js";
 import validatorCreateProduct from "../../../middlewares/validator_product.js";
 import passport from "passport";
-import auth from "../../../middlewares/auth.js";
+import auth from "../../../middlewares/session.js";
 import passport_call from "../../../middlewares/passport_call.js";
 
 const router = Router();

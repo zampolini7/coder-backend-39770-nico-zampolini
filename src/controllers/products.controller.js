@@ -9,6 +9,7 @@ class ProductController2 {
   }
 
   getProducts = async (req, res, next) => {
+    console.log(req.query, "limit");
     let page = req.query.page ?? 1;
     let limit = req.query.limit ?? 5;
     let title = req.query.title ? new RegExp(req.query.title, "i") : "";

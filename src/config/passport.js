@@ -103,7 +103,9 @@ export default function () {
       async (jwt_payload, done) => {
         try {
           console.log(jwt_payload, "jtwt_payload");
-          let one = await User.findOne({ email: jwt_payload.email });
+          let one = await User.findOne({
+            email: jwt_payload.email,
+          });
           if (one) {
             delete one.password;
             return done(null, one);

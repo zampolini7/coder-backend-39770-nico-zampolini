@@ -1,6 +1,6 @@
 import { Router } from "express";
 import config from "../../config/index.js";
-
+import jwt from "jsonwebtoken";
 export default class RouterCustom {
   constructor() {
     this.router = Router();
@@ -36,8 +36,11 @@ export default class RouterCustom {
         .send({ status: "error", error: "Unauthorization" });
     }
     // 'BEARER lakhjsdosadfjasdfsad'
+    console.log("encontro el req.headers");
     const token = authHeader.split(" ")[1];
+    console.log(token, "token");
     let user = jwt.verify(token, config.privateKeyJwt);
+    console.log(user, "user");
     if (!policies.includes(user.role.toUpperCase())) {
       return res
         .status(403)

@@ -18,7 +18,7 @@ class ProductRouter extends Router {
 
     this.post(
       "/",
-      ["USER_PREMIUM"],
+      ["USER-PREMIUM"],
       passport_call("jwt"),
       authJWT("user-premium"),
       validatorCreateProduct,

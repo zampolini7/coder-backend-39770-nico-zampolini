@@ -10,8 +10,9 @@ dotenv.config({
   path: mode === "development" ? "./.env.development" : "./.env.production",
 });
 
+console.log(process.env.persistence);
 export default {
-  privateKeyJwt: process.env.PRIVATE_KEY_JWT || "",
+  privateKeyJwt: process.env.SECRET_JWT || "",
   PORT: process.env.PORT || 8060,
   MONGO_URL: process.env.MONGO_URL || "",
   // connectDB: async () => {

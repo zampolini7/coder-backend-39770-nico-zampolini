@@ -5,7 +5,7 @@ import Validator from "../../../middlewares/validator.js";
 import RouterCustom from "../../RouterCustom/index.js";
 import generateToken from "../../../middlewares/generateToken.js";
 
-class AuthRouter extends RouterCustom {
+class SessionRouter extends RouterCustom {
   init() {
     //init login auth passport
     this.post(
@@ -13,7 +13,7 @@ class AuthRouter extends RouterCustom {
       "/signin",
       ["PUBLIC"],
       passport.authenticate("signin", {
-        failureRedirect: "/api/auth/fail-login",
+        failureRedirect: "/api/session/fail-login",
       }),
       // passwordIsOk,
       // is_valid_password,
@@ -57,7 +57,7 @@ class AuthRouter extends RouterCustom {
       pass_is_8,
       createHash,
       passport.authenticate("register", {
-        failureRedirect: "/api/auth/fail-register",
+        failureRedirect: "/api/session/fail-register",
       }),
       (req, res) =>
         res.status(201).json({
@@ -92,7 +92,7 @@ class AuthRouter extends RouterCustom {
       ["PUBLIC"],
       passport.authenticate(
         "github",
-        { failureRedirect: "api/auth/fail-register-github" },
+        { failureRedirect: "api/session/fail-register-github" },
         (req, res) => {
           res.status(200).redirect("/");
         }
@@ -108,6 +108,6 @@ class AuthRouter extends RouterCustom {
   }
 }
 
-const authRouter = new AuthRouter();
-const router = authRouter.getRouter();
+const sessionRouter = new SessionRouter();
+const router = sessionRouter.getRouter();
 export default router;
