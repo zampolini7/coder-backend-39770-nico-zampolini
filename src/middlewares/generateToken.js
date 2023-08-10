@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 
 export default (req, res, next) => {
-  console.log(req, "req");
+  console.log(req.user, "req.user");
   console.log(req.body, "req.body");
   const token = jwt.sign(
     {
@@ -12,5 +12,6 @@ export default (req, res, next) => {
     { expiresIn: 60 * 60 * 1000 }
   );
   req.token = token;
+
   return next();
 };

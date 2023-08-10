@@ -1,4 +1,4 @@
-export default class CartRepository {
+export default class UserRepository {
   constructor(dao) {
     this.dao = dao;
   }
@@ -7,17 +7,17 @@ export default class CartRepository {
     let result = await this.dao.get();
     return result;
   };
-  getById = async (pid) => {
-    let result = await this.dao.getById(pid);
+  getById = async (uid) => {
+    let result = await this.dao.getById(uid);
     return result;
   };
-  create = async (newCart) => {
+  create = async (newUser) => {
     // aca viene el dto
-    let result = await this.dao.create(newCart);
+    let result = await this.dao.create(newUser);
     return result;
   };
-  update = async (pid, updateToProduct) => {
-    let result = await this.dao.update(pid, updateToProduct);
+  update = async (uid, updateUser) => {
+    let result = await this.dao.update(uid, updateUser);
     return result;
   };
   delete = async (pid) => {

@@ -21,7 +21,7 @@ class CartMongo {
 
   update = async (cid, updateToCart) => {
     return await this.cartModel
-      .findByIdAndUpdate(cid, data, {
+      .findByIdAndUpdate(cid, updateToCart, {
         new: true,
       })
       .populate("user_id", "name -_id");
@@ -32,4 +32,6 @@ class CartMongo {
   };
 }
 
-export default CartMongo;
+const cart = new CartMongo();
+
+export default cart;

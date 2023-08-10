@@ -25,12 +25,11 @@ export default class RouterCustom {
 
   handlePolicies = (policies) => (req, res, next) => {
     // ['USER'] ['USER', 'USER_PREMIUN']
-    console.log(policies, "policies");
     if (policies[0] === "PUBLIC") return next();
+    if (policies[0] === "") return next();
+
     const authHeader = req.headers.authorization;
     if (!authHeader) {
-      console.log(req.headers.authorization);
-      console.log("entro aca");
       return res
         .status(401)
         .send({ status: "error", error: "Unauthorization" });

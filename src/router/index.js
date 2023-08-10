@@ -5,6 +5,7 @@ import product_router from "./api/product/ProductRouter.js";
 import mail_router from "./pruebasmail/index.js";
 import session_router from "./api/session/sessionRouter.js";
 import pruebas_router from "./api/pruebas/index.js";
+import user_router from "./api/users/index.js";
 // import sessions_router from "./api/session/session.js";
 
 const index_router = Router();
@@ -12,6 +13,8 @@ const index_router = Router();
 index_router.use("/products", product_router);
 index_router.use("/carts", cart_router);
 index_router.use("/session", session_router);
+index_router.use("/users", user_router);
+
 index_router.use("/cookies", cookies_router);
 index_router.use("/mail", mail_router);
 index_router.use("/pruebas", pruebas_router);

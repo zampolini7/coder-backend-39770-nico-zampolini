@@ -4,50 +4,40 @@ import pass_is_8 from "../../../middlewares/pass_is_8.js";
 import Validator from "../../../middlewares/validator.js";
 import RouterCustom from "../../RouterCustom/index.js";
 import generateToken from "../../../middlewares/generateToken.js";
+import passwordIsOk from "../../../middlewares/is_valid_password.js";
+import passport_call from "../../../middlewares/passport_call.js";
+import {
+  getSession,
+  createSession,
+  deleteSession,
+  createUser,
+  getFailRegister,
+  getFailRegisterGithub,
+  getGithubAuthenticate,
+  getRegisterGithub,
+} from "../../../controllers/session.controller.js";
 
 class SessionRouter extends RouterCustom {
   init() {
     //init login auth passport
+    this.get(
+      "/current",
+      ["PUBLIC"],
+      passport_call("jwt", "fail-auth"),
+      getSession
+    );
+
     this.post(
       //puede haber validacion de campos obligatorios y de passsword con 8 caracteres
       "/signin",
       ["PUBLIC"],
-      passport.authenticate("signin", {
-        failureRedirect: "/api/session/fail-login",
-      }),
-      // passwordIsOk,
-      // is_valid_password,
+      passport_call("signin", "fail-login"),
+      passwordIsOk,
       generateToken,
-      (req, res, next) => {
-        console.log(req.token, "res");
-        try {
-          return res
-            .status(200)
-            .cookie("token", req.token, {
-              maxAge: 60 * 60 * 1000,
-              httpOnly: true,
-            })
-            .json({
-              success: true,
-              message: req.token,
-            });
-        } catch (error) {
-          next(error);
-        }
-      }
+      createSession
     );
 
-    this.post("/signout", ["PUBLIC"], async (req, res, next) => {
-      try {
-        req.session.destroy();
-        return res.status(200).json({
-          success: true,
-          message: "User logged out",
-        });
-      } catch (error) {
-        next(error);
-      }
-    });
+    this.post("/signout", ["PUBLIC"], deleteSession);
 
     //init register auth
     this.post(
@@ -59,22 +49,11 @@ class SessionRouter extends RouterCustom {
       passport.authenticate("register", {
         failureRedirect: "/api/session/fail-register",
       }),
-      (req, res) =>
-        res.status(201).json({
-          success: true,
-          message: "User created",
-        })
+      createUser
     );
-    this.get("/fail-register", (req, res) => {
-      res.status(403).json({
-        succes: false,
-        message: "Bad auth",
-      });
-    });
-    //end register auth
 
-    this.put("/");
-    this.delete("/");
+    this.get("/fail-register", getFailRegister);
+    //end register auth
 
     //init github auth
     this.get(
@@ -83,27 +62,18 @@ class SessionRouter extends RouterCustom {
       passport.authenticate("github", {
         scope: ["user:email"],
       }),
-      (req, res) => {
-        console.log("hola");
-      }
+      getGithubAuthenticate
     );
+
     this.get(
       "/github/callback",
       ["PUBLIC"],
-      passport.authenticate(
-        "github",
-        { failureRedirect: "api/session/fail-register-github" },
-        (req, res) => {
-          res.status(200).redirect("/");
-        }
-      )
+      passport.authenticate("github", {
+        failureRedirect: "api/session/fail-register-github",
+      }),
+      getRegisterGithub
     );
-    this.get("/fail-register-github", ["PUBLIC"], (req, res) => {
-      res.status(403).json({
-        succes: false,
-        message: "Bad auth",
-      });
-    });
+    this.get("/fail-register-github", ["PUBLIC"], getFailRegisterGithub);
     //end github auth
   }
 }

@@ -79,7 +79,6 @@ class CartController {
   updateCart = async (req, res, next) => {
     try {
       const { cid, pid, units } = req.params;
-      console.log(req.params, "req.para");
 
       if (cid && pid && units) {
         const cart = await this.cartService.update(cid, pid, units);

@@ -21,11 +21,11 @@ export default class ProductRepository {
     return result;
   };
   update = async (pid, updateToProduct) => {
-    let result = await this.dao.update();
+    let result = await this.dao.update(pid, updateToProduct);
     return result;
   };
   delete = async (pid) => {
-    let result = await this.dao.delete();
+    let result = await this.dao.delete(pid);
     return result;
   };
 }

@@ -23,7 +23,6 @@ cookies_router.get("/set", async (req, res, next) => {
 });
 
 cookies_router.get("/get", async (req, res, next) => {
-  console.log(req.cookies);
   try {
     return res.status(200).json(req.cookies);
   } catch (error) {

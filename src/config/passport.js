@@ -7,17 +7,17 @@ import User from "../dao/Mongo/Models/User.js";
 const { GH_CLIENT_ID, GH_CLIENT_SECRET, GITHUB_CALLBACK } = process.env;
 
 export default function () {
-  passport.serializeUser((user, done) => {
-    done(null, user._id); // no hay error, y el id del usuario
-  });
-  passport.deserializeUser(async (id, done) => {
-    try {
-      const user = await User.findById(id);
-      done(null, user);
-    } catch (error) {
-      done(error);
-    }
-  });
+  // passport.serializeUser((user, done) => {
+  //   done(null, user._id); // no hay error, y el id del usuario
+  // });
+  // passport.deserializeUser(async (id, done) => {
+  //   try {
+  //     const user = await User.findById(id);
+  //     done(null, user);
+  //   } catch (error) {
+  //     done(error);
+  //   }
+  // });
 
   passport.use(
     "register",
@@ -50,6 +50,7 @@ export default function () {
         usernameField: "email",
       },
       async (username, password, done) => {
+        console.log(username, "username", password, "password");
         try {
           let one = await User.findOne({ email: username });
           if (one) {

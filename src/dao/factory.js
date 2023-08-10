@@ -3,17 +3,18 @@ import config from "../config/index.js";
 let ProductDao;
 let UserDao;
 let CartDao;
-console.log(config.persistence, "config.persistence en factory");
+let SessionDao;
 switch (config.persistence) {
   case "MONGO":
     let ProductDaoMongo = (await import("../dao/Mongo/product.mongo.js"))
       .default;
-    // let CartDaoMongo = await import("../dao/Mongo/cart.mongo.js");
-    // let UsersDaoMongo = await import("../dao/Mongo/users.mongo.js");
-
+    let CartDaoMongo = (await import("../dao/Mongo/cart.mongo.js")).default;
+    let UsersDaoMongo = (await import("../dao/Mongo/users.mongo.js")).default;
+    SessionDao = (await import("../dao/Mongo/session.mongo.js")).default;
     ProductDao = ProductDaoMongo;
-    // CartDao = CartDaoMongo;
-    // UserDao = UsersDaoMongo;
+    CartDao = CartDaoMongo;
+    UserDao = UsersDaoMongo;
+
     break;
 
   case "MEMORY":
@@ -31,4 +32,4 @@ switch (config.persistence) {
 }
 console.log(ProductDao);
 
-export const factory = { ProductDao, UserDao, CartDao };
+export const factory = { ProductDao, UserDao, CartDao, SessionDao };

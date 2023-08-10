@@ -1,4 +1,4 @@
-import authJWT from "../../../middlewares/isAuthJtw.js";
+import authJWT from "../../../middlewares/isRoleAuth.js";
 import passport_call from "../../../middlewares/passport_call.js";
 import validatorCreateProduct from "../../../middlewares/validator_product.js";
 import Router from "../../RouterCustom/index.js";
@@ -18,7 +18,9 @@ class ProductRouter extends Router {
 
     this.post(
       "/",
-      ["USER-PREMIUM"],
+      // ["USER-PREMIUM"],
+      [""],
+
       passport_call("jwt"),
       authJWT("user-premium"),
       validatorCreateProduct,
@@ -27,13 +29,21 @@ class ProductRouter extends Router {
 
     this.put(
       "/:pid",
-      ["USER_PREMIUM"],
+      // ["USER_PREMIUM"],
+      [""],
       passport_call("jwt"),
       authJWT("user-premium"),
       updateProduct
     );
 
-    this.delete("/:pid", ["USER_PREMIUM"], deleteProduct);
+    this.delete(
+      "/:pid",
+      // ["USER_PREMIUM"],
+      [""],
+      passport_call("jwt"),
+      authJWT("user-premium"),
+      deleteProduct
+    );
   }
 }
 
